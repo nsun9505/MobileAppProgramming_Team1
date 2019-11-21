@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_gamestart">
+
+    <fragment
+        android:id="@+id/navigation_gamestart"
+        android:name="com.example.testproject.ui.start.StartFragment"
+        android:label="GameStart"
+        tools:layout="@layout/fragment_start" />
+
+    <fragment
+        android:id="@+id/navigation_open_itembox"
+        android:name="com.example.testproject.ui.openitem.OpenItemFragment"
+        android:label="아이템상자열기"
+        tools:layout="@layout/fragment_openitem" />
+
+    <fragment
+        android:id="@+id/navigation_open_charbox"
+        android:name="com.example.testproject.ui.OpenCharacter.OpenCharacterFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_opencharacter" />
+
+    <fragment
+        android:id="@+id/navigation_view_character"
+        android:name="com.example.testproject.ui.OpenCharacter.OpenCharacterFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_opencharacter" />
+
+    <fragment
+        android:id="@+id/navigation_upgrade"
+        android:name="com.example.testproject.ui.OpenCharacter.OpenCharacterFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_opencharacter" />
+
+
+</navigation>
