@@ -2,6 +2,7 @@ package com.example.testproject.ui.openitem;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,19 +21,18 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.testproject.R;
 
-public class OpenItemFragment extends AppCompatActivity {
-   // private OpenItemViewModel openItemViewModel;
+public class OpenItemFragment extends Fragment {
+    private OpenItemViewModel openItemViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-  //      openItemViewModel =ViewModelProviders.of(this).get(OpenItemViewModel.class);
+        openItemViewModel =ViewModelProviders.of(this).get(OpenItemViewModel.class);
         View root = inflater.inflate(R.layout.fragment_openitem, container, false);
 
-        setContentView(R.layout.fragment_openitem);
-        int img[] ={R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.d};
+        int img[] = {R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.d};
 
         MyAdapter adapter = new MyAdapter (
-                getApplicationContext(),
+                getActivity().getApplicationContext(),
                 R.layout.item,       // GridView 항목의 레이아웃 row.xml
                 img);    // 데이터
         GridView gv = (GridView)root.findViewById(R.id.grid);
