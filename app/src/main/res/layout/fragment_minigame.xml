@@ -12,7 +12,7 @@
         android:text="초기화"
         android:id="@+id/btn1"/>
 -->
-    <com.example.testproject.ui.start.movePoint
+    <com.mapteam1.lumpcolletor.ui.minigame.movePoint
         android:id="@+id/mp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

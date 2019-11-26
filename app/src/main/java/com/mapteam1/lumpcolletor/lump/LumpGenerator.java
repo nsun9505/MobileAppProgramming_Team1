@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class LumpGenerator {
@@ -21,6 +22,7 @@ public class LumpGenerator {
     private static final String DIR_SPRITE = "lump_parts/spr_";
     private static final String DIR_LUMPDATA = "lump_data.json";
 
+    public ArrayList<Bitmap> _test_imgs = new ArrayList<>();
     public String _test_error_msg = "no error";
     JSONArray blueprints;
     private Random random = new Random();

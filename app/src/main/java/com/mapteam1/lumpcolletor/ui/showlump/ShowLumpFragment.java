@@ -1,6 +1,8 @@
 package com.mapteam1.lumpcolletor.ui.showlump;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.lump.LumpGenerator;
+
+import java.util.ArrayList;
 
 public class ShowLumpFragment extends Fragment {
     private ShowLumpViewModel showcharacterViewModel;
@@ -30,7 +35,7 @@ public class ShowLumpFragment extends Fragment {
         MyAdapter adapter = new MyAdapter(
                 getActivity().getApplicationContext(),
                 R.layout.adapter_lump,       // GridView 항목의 레이아웃 row.xml
-                img);    // 데이터
+                LumpGenerator.getref()._test_imgs);    // 데이터
         GridView gv1 = (GridView)root1.findViewById(R.id.grid1);
         gv1.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
         final TextView textView1 = root1.findViewById(R.id.text_showcharacter);
@@ -51,10 +56,10 @@ public class ShowLumpFragment extends Fragment {
 class MyAdapter extends BaseAdapter {
     Context context;
     int layout;
-    int img[];
+    ArrayList<Bitmap> img;
     LayoutInflater inf;
 
-    public MyAdapter(Context context, int layout, int[] img) {
+    public MyAdapter(Context context, int layout, ArrayList<Bitmap> img) {
         this.context = context;
         this.layout = layout;
         this.img = img;
@@ -64,12 +69,12 @@ class MyAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return img.length;
+        return img.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return img[position];
+        return img.get(position);
     }
 
     @Override
@@ -82,7 +87,7 @@ class MyAdapter extends BaseAdapter {
         if (convertView==null)
             convertView = inf.inflate(layout, null);
         ImageView iv1 = (ImageView)convertView.findViewById(R.id.characterimageView);
-        iv1.setImageResource(img[position]);
+        iv1.setImageBitmap(img.get(position));
 
         return convertView;
     }

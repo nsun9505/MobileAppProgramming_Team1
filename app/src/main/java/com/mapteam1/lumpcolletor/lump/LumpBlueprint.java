@@ -33,6 +33,7 @@ public class LumpBlueprint {
             matrix.postTranslate(128+data.xpos, 128+data.ypos);
             canvas.drawBitmap(parts_spr, matrix, paint);
         }
+        LumpGenerator.getref()._test_imgs.add(result);
         return result;
     }
 }
