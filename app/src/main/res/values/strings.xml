@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lump Colletor</string>
+    <string name="title_minigame">탐색</string>
+    <string name="title_lootbox">상자</string>
+    <string name="title_lootlump">덩어리 찾기</string>
+    <string name="title_showlump">모은 덩어리</string>
+    <string name="title_upgrade">강화</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_gamestart"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_minigame" />
+
+    <item
+        android:id="@+id/navigation_open_itembox"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_lootbox" />
+
+    <item
+        android:id="@+id/navigation_open_charbox"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_lootlump" />
+
+    <item
+        android:id="@+id/navigation_view_character"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_showlump" />
+
+    <item
+        android:id="@+id/navigation_upgrade"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_upgrade" />
+
+
+
+</menu>
