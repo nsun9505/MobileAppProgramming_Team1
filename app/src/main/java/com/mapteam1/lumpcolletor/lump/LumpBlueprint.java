@@ -12,7 +12,7 @@ public class LumpBlueprint {
     ArrayList<PartsData> layer = new ArrayList<>();
 
     public Bitmap Produce() {
-        Bitmap result = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
+        Bitmap result = Bitmap.createBitmap(320, 320, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         int i;
         Matrix matrix = new Matrix();
@@ -28,9 +28,9 @@ public class LumpBlueprint {
 
             matrix.reset();
             matrix.preTranslate(-data.size, -data.size);
-            matrix.postRotate(data.angle);
             matrix.postScale(data.hflip, 1);
-            matrix.postTranslate(128+data.xpos, 128+data.ypos);
+            matrix.postRotate(-data.angle);
+            matrix.postTranslate(160+data.xpos, 160+data.ypos);
             canvas.drawBitmap(parts_spr, matrix, paint);
         }
         LumpGenerator.getref()._test_imgs.add(result);

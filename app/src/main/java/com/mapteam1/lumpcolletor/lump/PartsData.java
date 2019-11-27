@@ -9,7 +9,15 @@ public class PartsData {
     int angle;
     int hflip;
 
-    public PartsData() {}
+    public PartsData() {
+        key = "BODY";
+        index = 0;
+        xpos = 0;
+        ypos = 0;
+        size = 0;
+        angle = 0;
+        hflip = 1;
+    }
 
     public PartsData(PartsData c) {
         key = c.key;
