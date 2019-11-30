@@ -299,7 +299,7 @@ public class LumpGenerator {
                         _randomy = getRandomSign() * getRandomInt(_randomh);
 
                         mirror_data.xpos = _centerx + _mirror_x * _mirrorlength + _randomx;
-                        mirror_data.ypos = _centery + _mirror_y * _mirrorlength + _randomy;
+                        mirror_data.ypos = _centery - _mirror_y * _mirrorlength + _randomy;
                         mirror_data.angle = _angle * _flip_origin * _flip_mirror;
                         mirror_data.hflip = _flip_mirror;
                         lbp.layer.add(mirror_data);
