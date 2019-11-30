@@ -28,23 +28,21 @@
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:navGraph="@navigation/mobile_navigation" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="8dp"
         android:text="LV"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/exp"
+        app:layout_constraintLeft_toRightOf="@+id/exp"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -53,75 +51,96 @@
         android:layout_height="wrap_content"
         android:text="경험치"
         android:textSize="15dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintEnd_toStartOf="@id/progressBar"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView3"
+        app:layout_constraintRight_toLeftOf="@id/progressBar"
+        app:layout_constraintTop_toTopOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/search"
         tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="탐색도"
         android:textSize="15dp"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintEnd_toStartOf="@id/progressBar2"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView3"
+        app:layout_constraintRight_toLeftOf="@id/progressBar2"
+        app:layout_constraintBottom_toBottomOf="@id/textView3"
         app:layout_constraintTop_toBottomOf="@id/exp"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:max="100"
         android:progress="20"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar2"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintStart_toEndOf="@+id/exp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/exp"
+        app:layout_constraintTop_toTopOf="@+id/exp"
+        app:layout_constraintBottom_toBottomOf="@+id/exp"
+        app:layout_constraintRight_toLeftOf="@+id/settingbtn"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:max="100"
         android:progress="10"
 
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintStart_toEndOf="@+id/search"
-        app:layout_constraintTop_toBottomOf="@id/progressBar"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/search"
+        app:layout_constraintTop_toTopOf="@id/search"
+        app:layout_constraintBottom_toBottomOf="@+id/search"
+        app:layout_constraintRight_toLeftOf="@+id/settingbtn"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/settingbtn"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/textView3"
+        app:layout_constraintLeft_toRightOf="@+id/progressBar2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textView3"
         app:srcCompat="@android:drawable/ic_menu_manage"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="4dp"
+        android:drawableLeft="@drawable/ic_notifications_black_24dp"
         android:text="금화"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintEnd_toStartOf="@+id/settingbtn"
-        app:layout_constraintStart_toEndOf="@+id/progressBar2"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/settingbtn"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="8dp"
+        android:drawableLeft="@drawable/ic_notifications_black_24dp"
+        android:text="상자"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintLeft_toRightOf="@+id/textView4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingbtn"
         tools:ignore="MissingConstraints" />
 
 

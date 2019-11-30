@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_upgrade"
-        android:name="com.mapteam1.lumpcolletor.ui.lootlump.LootLumpFragment"
+        android:name="com.mapteam1.lumpcolletor.ui.upgrade.ListView_Upgrade_main"
         android:label="@string/title_upgrade"
         tools:layout="@layout/fragment_upgrade" />
 
