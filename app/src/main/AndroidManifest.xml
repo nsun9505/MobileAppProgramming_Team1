@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingFragment"/>
+        <activity android:name=".ui.ShowLumpDetail"/>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.mapteam1.lumpcolletor.ui.showlump;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.mapteam1.lumpcolletor.R;
 import com.mapteam1.lumpcolletor.lump.LumpGenerator;
+import com.mapteam1.lumpcolletor.ui.ShowLumpDetail;
 
 import java.util.ArrayList;
 
@@ -38,14 +40,16 @@ public class ShowLumpFragment extends Fragment {
                 LumpGenerator.getref()._test_imgs);    // 데이터
         GridView gv1 = (GridView)root1.findViewById(R.id.grid1);
         gv1.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
-        final TextView textView1 = root1.findViewById(R.id.text_showcharacter);
+    //    final TextView textView1 = root1.findViewById(R.id.text_showcharacter);
         // GridView 아이템을 클릭하면 상단 텍스트뷰에 position 출력
 
         gv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                textView1.setText("position : " + position);
+                Intent intent=new Intent(getActivity(), ShowLumpDetail.class);
+             startActivity(intent);
+                //textView1.setText("position : " + position);
             }
         });
         return root1;
