@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.mapteam1.lumpcolletor.function.GameInterface;
+import com.mapteam1.lumpcolletor.function.Player;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mapteam1.lumpcolletor.lump.LumpGenerator;
 
@@ -20,13 +22,18 @@ import androidx.navigation.ui.NavigationUI;
 import android.app.Activity;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    Button btn;
     private View decorView;
     private int uiOption;
+    private GameInterface Ginterface = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ActionBar actionBar = getSupportActionBar(); //강제로 타이틀바 숨김
         actionBar.hide(); //타이틀바 숨김 못쓰는이유 : 컨테이너에서 위로 안올라감
         //전체화면시작
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             uiOption |= View.SYSTEM_UI_FLAG_FULLSCREEN;
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT )
             uiOption |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
         //전체화면 중간 스톱
         setContentView(R.layout.activity_main);
 
@@ -50,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        this.initGameInfo();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -75,4 +83,39 @@ public class MainActivity extends AppCompatActivity {
         }
     } //전체화면끝
 
+    public void initGameInfo(){
+        this.Ginterface = new Player();
+        TextView levelText = (TextView)findViewById(R.id.textView3);
+        levelText.setText(String.valueOf(Ginterface.getCurrentLevel() +" LV"));
+
+        ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
+        expProgress.setProgress(Ginterface.getCurrentExp());
+
+        ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
+        searchProgress.setProgress(Ginterface.getSearchValue());
+
+        TextView moneyText = (TextView)findViewById(R.id.textView4);
+        moneyText.setText(String.valueOf(Ginterface.getMoney()));
+    }
+
+    public void gameClear(){
+        int ret =  Ginterface.increaseExp(10);
+        if(ret == 1){
+            Ginterface.levelUp();
+            Ginterface.increaseNumberOfBox();
+            TextView levelText = (TextView)findViewById(R.id.textView3);
+            levelText.setText(String.valueOf(Ginterface.getCurrentLevel() +" LV"));
+        }
+        Ginterface.updateMoney();
+        Ginterface.increaseSearchValue(10);
+
+        ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
+        expProgress.setProgress(Ginterface.getCurrentExp());
+
+        ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
+        searchProgress.setProgress(Ginterface.getSearchValue());
+
+        TextView moneyText = (TextView)findViewById(R.id.textView4);
+        moneyText.setText(String.valueOf(Ginterface.getMoney()));
+    }
 }
