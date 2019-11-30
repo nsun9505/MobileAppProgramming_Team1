@@ -24,7 +24,7 @@ public class LootLumpViewModel extends ViewModel {
         //mLumpBlueprint = new MutableLiveData<>();
         //mLumpBlueprint.setValue(LumpGenerator.getref().MakeBlueprint());
         mBitmap = new MutableLiveData<>();
-        changeLump();//mBitmap.setValue(LumpGenerator.getref().MakeBlueprint().Produce());
+        //changeLump();//mBitmap.setValue(LumpGenerator.getref().MakeBlueprint().Produce());
     }
 
     public LiveData<String> getText() {
