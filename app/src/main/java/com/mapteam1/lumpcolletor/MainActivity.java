@@ -3,6 +3,9 @@ package com.mapteam1.lumpcolletor;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.view.Window;
@@ -11,6 +14,7 @@ import android.view.WindowManager;
 import com.mapteam1.lumpcolletor.function.GameInterface;
 import com.mapteam1.lumpcolletor.function.Player;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mapteam1.lumpcolletor.function.WorkThread;
 import com.mapteam1.lumpcolletor.lump.LumpGenerator;
 
 import androidx.appcompat.app.ActionBar;
@@ -27,6 +31,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     Button btn;
+    private Thread updateThread;
     private View decorView;
     private int uiOption;
     private GameInterface Ginterface = null;
@@ -84,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     } //전체화면끝
 
     public void initGameInfo(){
-        this.Ginterface = new Player();
+        this.Ginterface = Player.getPlayer();
         TextView levelText = (TextView)findViewById(R.id.textView3);
         levelText.setText(String.valueOf(Ginterface.getCurrentLevel() +" LV"));
 
@@ -96,6 +101,33 @@ public class MainActivity extends AppCompatActivity {
 
         TextView moneyText = (TextView)findViewById(R.id.textView4);
         moneyText.setText(String.valueOf(Ginterface.getMoney()));
+
+        Handler handler = new Handler(){
+          @Override
+          public void handleMessage(Message msg){
+            switch(msg.what){
+                case WorkThread.UPDATE_EXP:
+                    ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
+                    expProgress.setProgress(msg.arg1);
+                    break;
+                case WorkThread.UPDATE_LEVEL:
+                    TextView levelText = (TextView)findViewById(R.id.textView3);
+                    levelText.setText(msg.obj.toString());
+                    break;
+                case WorkThread.UPDATE_MONEY:
+                    TextView moneyText = (TextView)findViewById(R.id.textView4);
+                    moneyText.setText(msg.obj.toString());
+                    break;
+                case WorkThread.UPDATE_SEARCHVALUE:
+                    ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
+                    searchProgress.setProgress(msg.arg1);
+                    break;
+            }
+          }
+        };
+
+        updateThread = new WorkThread(handler);
+        updateThread.start();
     }
 
     public void gameClear(){
@@ -107,8 +139,10 @@ public class MainActivity extends AppCompatActivity {
             levelText.setText(String.valueOf(Ginterface.getCurrentLevel() +" LV"));
         }
         Ginterface.updateMoney();
-        Ginterface.increaseSearchValue(10);
+        ret = Ginterface.increaseSearchValue(10);
+        if(ret == 1){
 
+        }
         ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
         expProgress.setProgress(Ginterface.getCurrentExp());
 

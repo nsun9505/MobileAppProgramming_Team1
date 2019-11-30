@@ -1,5 +1,6 @@
 package com.mapteam1.lumpcolletor.ui.lootlump;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -15,15 +17,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.mapteam1.lumpcolletor.MainActivity;
 import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.lump.LumpBlueprint;
 
 public class LootLumpFragment extends Fragment {
 
     private LootLumpViewModel lootLumpViewModel;
-
+    private Context context;
     public View onCreateView(@NonNull final LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             final ViewGroup container, Bundle savedInstanceState) {
         lootLumpViewModel =
                 ViewModelProviders.of(this).get(LootLumpViewModel.class);
         View root = inflater.inflate(R.layout.fragment_lootlump, container, false);
@@ -44,7 +48,16 @@ public class LootLumpFragment extends Fragment {
         final Button button = root.findViewById(R.id.LootLumpButton);
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                lootLumpViewModel.changeLump();
+                boolean ret = Player.getPlayer().getParts(100);
+                if(ret == false){
+                    Toast.makeText(container.getContext(), "fail....", Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(container.getContext(), "success....", Toast.LENGTH_LONG).show();
+                    lootLumpViewModel.changeLump();
+                }
+                if(Player.getPlayer().increaseExp(10) == 1)
+                    Player.getPlayer().levelUp();
+                Player.getPlayer().updateMoney();
             }
         });
         /*lootLumpViewModel.getBlueprint().observe(this, new Observer<LumpBlueprint>() {

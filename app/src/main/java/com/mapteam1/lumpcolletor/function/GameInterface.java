@@ -17,9 +17,10 @@ public interface GameInterface {
     // 레벨업 : level 증가
      void levelUp();
 
-    // 2차 보상
-    // 레벨업 : box 수 증가
-     void increaseNumberOfBox();
+    // 2차 보상 레벨업 : box 수 증가
+    void increaseNumberOfBox();
+    // 2차 보상 덩어리 얻기 : 탐색도 감소
+    boolean getParts(int cost);
 
     // 수정 필요
     // 2차 보상
@@ -42,4 +43,6 @@ public interface GameInterface {
      int getSearchValue();
      int getCurrentExp();
     int getMoney();
+    int getMaxSearchValue();
+    int getMaxExp();
 }

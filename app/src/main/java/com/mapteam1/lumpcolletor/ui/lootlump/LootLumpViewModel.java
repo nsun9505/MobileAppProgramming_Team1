@@ -3,12 +3,16 @@ package com.mapteam1.lumpcolletor.ui.lootlump;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.mapteam1.lumpcolletor.MainActivity;
 import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.function.GameInterface;
+import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.lump.LumpBlueprint;
 import com.mapteam1.lumpcolletor.lump.LumpGenerator;
 
@@ -35,5 +39,19 @@ public class LootLumpViewModel extends ViewModel {
 
     public void changeLump() {
         mBitmap.setValue(LumpGenerator.getref().MakeBlueprint().Produce());
+    }
+
+    public void gameClear(){
+        GameInterface player = Player.getPlayer();
+        int ret =  player.increaseExp(10);
+        if(ret == 1){
+            player.levelUp();
+            player.increaseNumberOfBox();
+        }
+        player.updateMoney();
+        ret = player.increaseSearchValue(10);
+        if(ret == 1){
+            // 탐색도 MAX 메시지
+        }
     }
 }

@@ -11,37 +11,51 @@ import java.util.Random;
 public class Player implements GameInterface {
     private static final int LEVELUP = 1;
     private static final int NOLEVELUP = 0;
-    private static final int GETPARTS = 1;
-    private static final int NOTGETPARTS = 0;
+    private static final int MAXSEARCHVALUE = 1;
+    private static final int NOTMAXSEARCHVALUE = 0;
     private static final int COMPLETEPIVOT = 1;
     private static final int NOTCOMPLETEPIVOT = 0;
+    private static final int MULTIPLY_TYPE_EXP = 1;
+    private static final int MULTIPLY_TYPE_SAERCHVALUE = 2;
+    private static final int MULTIPLY_TYPE_MONEY = 3;
+    private static final int NUMBER_OF_SKILL = 6;
+    private int maxSearchValue = 1000;
 
     private int maxExp;
-    private int maxSearchValue;
     private int level;                // 레벨
     private int currentExp;                // 경험치
     private int searchValue;        // 탐색도(탐색치)
     private int money;                // 재화
     private int numOfBox;            // 상자 개수
+    private double multiply;
+
     // 가지고 있는 장식리스트
     private ArrayList<Decoration> decoList;
+    private static Player myPlayer;
 
-    public Player() {
+    private Player(){
+        this.multiply = 0.0;
         this.level = 1;
         this.currentExp = 0;
-        this.searchValue = 0;
+        this.searchValue = 1000;
         this.money = 0;
         this.numOfBox = 0;
         this.maxExp = 100;
-        this.maxSearchValue = 100;
         this.decoList = new ArrayList<Decoration>();
+        }
+
+    private static class MyPlayer{
+        public static final Player PLAYER = new Player();
+    }
+    public static Player getPlayer() {
+        return MyPlayer.PLAYER;
     }
 
     // 1차 보상 : 경험치
     // 경험치 증가 -> MAX 도달 시 LEVELUP 리턴
     public int increaseExp(int getExp) {
         // 현재 경험치 갱신
-        this.setExp(this.getCurrentExp() + getExp);
+        this.setExp(this.getCurrentExp() + getExp + this.getAdditionValueByMultiply(MULTIPLY_TYPE_EXP, getExp));
 
         // 현재 경험치를 받아옴.
         int currentExp = this.getCurrentExp();
@@ -67,26 +81,28 @@ public class Player implements GameInterface {
     // 탐색도 증가 : 100% 도달 시 GETPIVOT 리턴, 아직 MAX가 100%가 아니면 NOTGETPIVOT
     public int increaseSearchValue(int getSearchValue) {
         // 현재 탐색도를 게임 클리어를 통해 얻은 탐색도만큼 증가시킨다.
-        this.setSearchValue(getSearchValue() + getSearchValue);
-
+        this.setSearchValue(getSearchValue() + getSearchValue + getAdditionValueByMultiply(MULTIPLY_TYPE_SAERCHVALUE, getSearchValue));
 
         if (this.getSearchValue() >= this.getMaxSearchValue()) {
-            this.setSearchValue(this.getSearchValue() - this.getMaxSearchValue());
-            this.updateMaxSearchValue();
-            return GETPARTS;
+            this.setSearchValue(this.getMaxSearchValue());
+            return MAXSEARCHVALUE;
         }
-        return NOTGETPARTS;
+        return NOTMAXSEARCHVALUE;
     }
 
-    private void updateMaxSearchValue() {
-        this.setMaxSearchValue(100 + (this.getCurrentLevel() - 1) * 20);
+    public boolean getParts(int cost){
+        if(cost > this.getSearchValue()){
+            return false;
+        }
+        this.setSearchValue(this.getSearchValue() - cost);
+        return true;
     }
 
     // 1차 보창 : 재화
     public void updateMoney() {
         // 1~200 사이의 재화를 랜덤하게 얻음.
         int getMoney = getRandom(200);
-        this.setMoney(this.getMoney() + getMoney);
+        this.setMoney(this.getMoney() + getMoney + getAdditionValueByMultiply(MULTIPLY_TYPE_MONEY, getMoney));
     }
 
     // 레벨업 : level 증가
@@ -162,6 +178,11 @@ public class Player implements GameInterface {
         return 1;                                        // SUCCESS
     }
 
+    public int getAdditionValueByMultiply(int type, int origin){
+        return (int)(origin * this.getMultiply());
+
+    }
+
     public int getCurrentLevel() {
         return this.level;
     }
@@ -185,13 +206,20 @@ public class Player implements GameInterface {
     public int getNumOfBox() {
         return this.numOfBox;
     }
-
-    private int getMaxSearchValue() {
+    public int getMaxSearchValue() {
         return this.maxSearchValue;
     }
 
-    private int getMaxExp() {
+    public int getMaxExp() {
         return this.maxExp;
+    }
+
+    public double getMultiply(){
+        return this.multiply;
+    }
+
+    private void setMultiply(double multiply){
+        this.multiply = multiply;
     }
 
     private void setMoney(int money) {
@@ -216,9 +244,5 @@ public class Player implements GameInterface {
 
     private void setMaxExp(int newMaxExp) {
         this.maxExp = newMaxExp;
-    }
-
-    private void setMaxSearchValue(int newMaxSearchValue) {
-        this.searchValue = newMaxSearchValue;
     }
 }
