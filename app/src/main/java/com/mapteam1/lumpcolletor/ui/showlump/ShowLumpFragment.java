@@ -32,8 +32,6 @@ public class ShowLumpFragment extends Fragment {
         showcharacterViewModel =ViewModelProviders.of(this).get(ShowLumpViewModel.class);
         View root1 = inflater.inflate(R.layout.fragment_showlump, container, false);
 
-        int img[] = {};
-
         MyAdapter adapter = new MyAdapter(
                 getActivity().getApplicationContext(),
                 R.layout.adapter_lump,       // GridView 항목의 레이아웃 row.xml
@@ -47,8 +45,9 @@ public class ShowLumpFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent intent=new Intent(getActivity(), ShowLumpDetail.class);
-             startActivity(intent);
+                Intent intent = new Intent(getActivity(), ShowLumpDetail.class);
+                intent.putExtra("index", position);
+                startActivity(intent);
                 //textView1.setText("position : " + position);
             }
         });

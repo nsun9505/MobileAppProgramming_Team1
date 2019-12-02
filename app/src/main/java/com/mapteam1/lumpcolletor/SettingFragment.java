@@ -1,6 +1,6 @@
 package com.mapteam1.lumpcolletor;
 
-import android.app.AppComponentFactory;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,16 +8,12 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import com.mapteam1.lumpcolletor.R;
-
-public class SettingFragment extends AppCompatActivity {
+public class SettingFragment extends Activity {
     private SeekBar seekBarSound;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_setting);
+        setContentView(R.layout.activity_option);
 
         this.seekBarSound = (SeekBar)this.findViewById(R.id.seekBar_sound);
         this.loadGameSetting();

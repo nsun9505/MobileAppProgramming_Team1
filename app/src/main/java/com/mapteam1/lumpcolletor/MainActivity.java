@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar actionBar = getSupportActionBar(); //강제로 타이틀바 숨김
-        actionBar.hide(); //타이틀바 숨김 못쓰는이유 : 컨테이너에서 위로 안올라감
+        getSupportActionBar().hide();
         //전체화면시작
         decorView = getWindow().getDecorView();
         uiOption = getWindow().getDecorView().getSystemUiVisibility();

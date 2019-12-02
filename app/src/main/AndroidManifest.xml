@@ -18,8 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingFragment"/>
-        <activity android:name=".ui.ShowLumpDetail"/>
+        <activity android:name=".SettingFragment"
+            android:theme="@style/AppTheme.Dialog"/>
+        <activity android:name=".ui.ShowLumpDetail"
+            android:theme="@style/AppTheme.Dialog"/>
     </application>
 
 </manifest>
