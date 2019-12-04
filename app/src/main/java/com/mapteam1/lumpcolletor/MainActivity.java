@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         //전체화면 중간 스톱
         setContentView(R.layout.activity_main);
 
-        ImageButton settingbtn = (ImageButton) findViewById(R.id.settingbtn); //설정버튼
+        Button settingbtn = (Button) findViewById(R.id.settingbtn); //설정버튼
         settingbtn.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) { //클릭이벤트

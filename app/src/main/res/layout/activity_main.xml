@@ -14,8 +14,8 @@
         android:background="?android:attr/windowBackground"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment"
         app:menu="@menu/bottom_nav_menu" />
 
@@ -27,9 +27,9 @@
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resource_bar"
         app:navGraph="@navigation/mobile_navigation" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:layout_marginLeft="8dp"
         android:text="LV"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/resource_bar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/exp"
@@ -101,47 +101,60 @@
         app:layout_constraintRight_toLeftOf="@+id/settingbtn"
         tools:ignore="MissingConstraints" />
 
-    <ImageButton
+    <Button
         android:id="@+id/settingbtn"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginRight="8dp"
+        android:foreground="@drawable/ic_option"
+        android:foregroundTint="#000000"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@id/textView3"
         app:layout_constraintLeft_toRightOf="@+id/progressBar2"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/textView3"
-        app:srcCompat="@android:drawable/ic_menu_manage"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/resource_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="4dp"
-        android:drawableLeft="@drawable/ic_notifications_black_24dp"
-        android:text="금화"
-        android:textSize="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/settingbtn"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="8dp"
-        android:drawableLeft="@drawable/ic_notifications_black_24dp"
-        android:text="상자"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintLeft_toRightOf="@+id/textView4"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingbtn"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/settingbtn">
 
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:foreground="@drawable/ic_coin"
+            android:foregroundTint="#000000" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="금화"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:foreground="@drawable/ic_box"
+            android:foregroundTint="#000000" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="상자"
+            android:textSize="20dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

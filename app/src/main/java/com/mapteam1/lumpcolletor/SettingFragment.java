@@ -40,5 +40,7 @@ public class SettingFragment extends Activity {
         editor.apply();
 
         Toast.makeText(this,"Setting Saved!",Toast.LENGTH_LONG).show();
+
+        finish();
     }
 }

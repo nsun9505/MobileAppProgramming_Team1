@@ -57,16 +57,28 @@ public class ListView_Upgrade_main  extends Fragment {
         ListView lv = (ListView)root1.findViewById(R.id.upgrade_list);
         lv.setAdapter(adapter);
         ListView_Upgrade u1 = new ListView_Upgrade(getResources().getDrawable(
-                R.drawable.a,null), "김씨", "010-1234-5678");
+                R.drawable.ic_upgrade_0,null), "스킬 발동 확률 증가", "0% -> 5%");
         adapter.add(u1);
 
         ListView_Upgrade u2 = new ListView_Upgrade(getResources().getDrawable(
-                R.drawable.a,null), "이씨", "010-8765-4321");
+                R.drawable.ic_upgrade_1,null), "스킬 발동 효과 증가", "0% -> 5%");
         adapter.add(u2);
 
         ListView_Upgrade u3 = new ListView_Upgrade(getResources().getDrawable(
-                R.drawable.a,null), "박씨", "010-0000-0000");
+                R.drawable.ic_upgrade_2,null), "탐색도 획득량 증가", "0% -> 5%");
         adapter.add(u3);
+
+        ListView_Upgrade u4 = new ListView_Upgrade(getResources().getDrawable(
+                R.drawable.ic_upgrade_3,null), "골드 획득량 증가", "0% -> 5%");
+        adapter.add(u4);
+
+        ListView_Upgrade u5 = new ListView_Upgrade(getResources().getDrawable(
+                R.drawable.ic_upgrade_4,null), "경험치 획득량 증가", "0% -> 5%");
+        adapter.add(u5);
+
+        ListView_Upgrade u6 = new ListView_Upgrade(getResources().getDrawable(
+                R.drawable.ic_upgrade_5,null), "최대 탐색도 증가", "0% -> 5%");
+        adapter.add(u6);
 
         // Data가 변경 되있음을 알려준다.
         adapter.notifyDataSetChanged();
