@@ -41,14 +41,28 @@ public class GyroSystem {
     private double timestamp = 0.0;
     private double dt;
 
+    GameParent game;
+    int ran;
 
-    public GyroSystem(final Activity a, final GameParent game, final View root, final MinigameViewModel aa) {
+    public GyroSystem(final Activity a, final View root, final MinigameViewModel aa) {
         mySensorManager = (SensorManager) a.getSystemService(Context.SENSOR_SERVICE);
         myGyro = mySensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
+        ran = (int)(Math.random()*3)+1;
+        if(ran == 1){
+            game = new gameFirst();
+        }
+        else if(ran == 2){
+            game = new gameSecond();
+        }
+        else{
+            game = new movePoint();
+        }
 
         targetX = getTargetX();
         targetY = getTargetY();
+
+
 
         Log.d("ans", "X: "+targetX);
         Log.d("ans", "Y: "+targetY);
@@ -80,6 +94,23 @@ public class GyroSystem {
 
                     if(Math.sqrt(Math.pow(currX-targetX,2)+Math.pow(currY-targetY,2))<0.05){
                         Toast.makeText(a,"CLEAR!!",Toast.LENGTH_SHORT).show();
+
+                        if(Player.getPlayer().increaseExp(10) == 1)
+                            Player.getPlayer().levelUp();
+                        Player.getPlayer().updateMoney();
+                        Player.getPlayer().increaseSearchValue(10);
+
+                        ran = (int)(Math.random()*4)+1;
+                        Log.d("ranran","ran : "+ran);
+                        if(ran == 1){
+                            game = new gameFirst();
+                        }
+                        else if(ran == 3){
+                            game = new gameSecond();
+                        }
+                        else{
+                            game = new movePoint();
+                        }
 
                         targetX = getTargetX();
                         targetY = getTargetY();

@@ -43,8 +43,7 @@ public class MinigameFragment extends Fragment {
 
 
     GyroSystem gs;
-    //GameParent gp;
-    movePoint mv;
+
     int height;
     int width;
 
@@ -60,8 +59,8 @@ public class MinigameFragment extends Fragment {
 
         final ImageView imageview = root.findViewById(R.id.MinigameImage);
 
-        mv = new movePoint();
-        gs = new GyroSystem(getActivity(),mv,root,minigameViewModel);
+
+        gs = new GyroSystem(getActivity(),root,minigameViewModel);
 
 
         minigameViewModel.getBitmap().observe(this, new Observer<Bitmap>() {
@@ -70,8 +69,6 @@ public class MinigameFragment extends Fragment {
                 imageview.setImageBitmap(s);
             }
         });
-
-
 
         return root;
     }
