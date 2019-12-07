@@ -55,9 +55,6 @@ public class LootLumpFragment extends Fragment {
                     Toast.makeText(container.getContext(), "success....", Toast.LENGTH_LONG).show();
                     lootLumpViewModel.changeLump();
                 }
-                if(Player.getPlayer().increaseExp(10) == 1)
-                    Player.getPlayer().levelUp();
-                Player.getPlayer().updateMoney();
             }
         });
         /*lootLumpViewModel.getBlueprint().observe(this, new Observer<LumpBlueprint>() {
