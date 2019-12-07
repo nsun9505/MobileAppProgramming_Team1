@@ -139,8 +139,7 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
                     clickItem.setCost(String.valueOf(upgradeItem.getuCost()));
 
                     setItem(clickItem.getIndex(), clickItem);
-
-
+                    
                     tvUserName = (TextView) v.findViewById(R.id.upgrade_name);
                     tvUserPhoneNumber = (TextView) v
                             .findViewById(R.id.upgrade_info);
