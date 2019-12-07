@@ -1,58 +1,46 @@
 package com.mapteam1.lumpcolletor.ui.minigame;
 
 import android.content.Context;
+
+import android.graphics.Bitmap;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-public class movePoint extends View {
-    float x = 500;
-    float y = 640;
+import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.gameskin.GameParent;
 
-    public movePoint(Context context) {
-        super(context);
+public class movePoint extends GameParent {
+    protected Bitmap GameScreen;
+    protected int width;
+    protected int height;
+
+    public movePoint() {
+        width = 320;
+        height = 320;
+        GameScreen = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     }
 
-    public movePoint(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-
+    public Bitmap GetBitmap() {
+        return GameScreen;
     }
 
-    public movePoint(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+    public void Update(float xpos, float ypos, float xtarget, float ytarget) {
+        Canvas canvas = new Canvas(GameScreen);
+        Paint paint = new Paint();
 
-    public void setX(float pitch, int width){
-        pitch+=60;
-
-        this.x = (float)width/120*pitch;
-
-    }
-
-    public void setY(float roll,int height){
-        roll+=60;
-
-        this.y = (float)height/120*roll;
-    }
-
-    public void initialize(int height,int width){
-        this.x = width/2;
-        this.y = height/2;
-    }
-    protected void onDraw(Canvas canvas){
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
+        Log.d("135135", "X: "+xpos+"  Y:"+ypos);
         paint.setColor(Color.WHITE);
-
-
-        canvas.drawCircle(x,y,50,paint);
-
-        //Log.d("xyxy", "X: "+x+"Y:"+y);
-
-
+        canvas.drawRect(0, 0, width, height, paint);
+        paint.setColor(Color.BLACK);
+        canvas.drawCircle(xpos*width, ypos*height, 30f, paint);
+        canvas.drawCircle(xtarget*width, ytarget*height, 20f, paint);
     }
 }
