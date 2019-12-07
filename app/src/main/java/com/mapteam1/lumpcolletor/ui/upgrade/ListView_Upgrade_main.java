@@ -1,22 +1,26 @@
 package com.mapteam1.lumpcolletor.ui.upgrade;
 
 import android.app.Activity;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.mapteam1.lumpcolletor.R;
 import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.function.Upgrade;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,48 +61,56 @@ public class ListView_Upgrade_main  extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root1 = inflater.inflate(R.layout.fragment_upgrade, container, false);
-        ListView_Adapter adapter = new ListView_Adapter(
-                getActivity().getApplicationContext());
-        ListView lv = (ListView)root1.findViewById(R.id.upgrade_list);
-        lv.setAdapter(adapter);
-        HashMap<Integer, Upgrade> upgradeItems = Player.getPlayer().getMyUpgradeMap();
+
+        ArrayList<ListView_Upgrade> upgradeList = new ArrayList<ListView_Upgrade>();
+        ArrayList<Upgrade> upgradeItems = Player.getPlayer().getUpgradeList();
 
         ListView_Upgrade u1 = new ListView_Upgrade(getResources().getDrawable(
                 R.drawable.ic_upgrade_0,null), upgradeItems.get(0).getuName(), upgradeItems.get(0).getuChanges(), String.valueOf(upgradeItems.get(0).getuCost()), 0);
-        adapter.add(u1);
+        upgradeList.add(u1);
 
         ListView_Upgrade u2 = new ListView_Upgrade(getResources().getDrawable(
                 R.drawable.ic_upgrade_1,null), upgradeItems.get(1).getuName(), upgradeItems.get(1).getuChanges(), String.valueOf(upgradeItems.get(1).getuCost()), 1);
-        adapter.add(u2);
+        upgradeList.add(u2);
 
         ListView_Upgrade u3 = new ListView_Upgrade(getResources().getDrawable(
                 R.drawable.ic_upgrade_2,null), upgradeItems.get(2).getuName(), upgradeItems.get(2).getuChanges(), String.valueOf(upgradeItems.get(2).getuCost()), 2);
-        adapter.add(u3);
+        upgradeList.add(u3);
 
         ListView_Upgrade u4 = new ListView_Upgrade(getResources().getDrawable(
                 R.drawable.ic_upgrade_3,null), upgradeItems.get(3).getuName(), upgradeItems.get(3).getuChanges(), String.valueOf(upgradeItems.get(3).getuCost()), 3);
-        adapter.add(u4);
+        upgradeList.add(u4);
 
         ListView_Upgrade u5 = new ListView_Upgrade(getResources().getDrawable(
                 R.drawable.ic_upgrade_4,null), upgradeItems.get(4).getuName(), upgradeItems.get(4).getuChanges(), String.valueOf(upgradeItems.get(4).getuCost()), 4);
-        adapter.add(u5);
+        upgradeList.add(u5);
 
         ListView_Upgrade u6 = new ListView_Upgrade(getResources().getDrawable(
                 R.drawable.ic_upgrade_5,null), upgradeItems.get(5).getuName(), upgradeItems.get(5).getuChanges(), String.valueOf(upgradeItems.get(5).getuCost()), 5);
-        adapter.add(u6);
+        upgradeList.add(u6);
 
         ListView_Upgrade u7 = new ListView_Upgrade(getResources().getDrawable(
                 R.drawable.ic_upgrade_,null), upgradeItems.get(6).getuName(), upgradeItems.get(6).getuChanges(), String.valueOf(upgradeItems.get(6).getuCost()), 6);
-        adapter.add(u7);
+        upgradeList.add(u7);
 
         ListView_Upgrade u8 = new ListView_Upgrade(getResources().getDrawable(
                 R.drawable.ic_upgrade_,null), upgradeItems.get(7).getuName(), upgradeItems.get(7).getuChanges(), String.valueOf(upgradeItems.get(7).getuCost()), 7);
-        adapter.add(u8);
-        Log.d("onCreateView", "view 생성");
+        upgradeList.add(u8);
+
+        View root1 = inflater.inflate(R.layout.fragment_upgrade, container, false);
+        ListView_Adapter adapter = new ListView_Adapter(getActivity().getApplicationContext(), upgradeList, this);
+
+        ListView lv = (ListView)root1.findViewById(R.id.upgrade_list);
+        lv.setAdapter(adapter);
+
         // Data가 변경 되있음을 알려준다.
         adapter.notifyDataSetChanged();
         return root1;
+    }
+
+    public void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
     }
 
 }

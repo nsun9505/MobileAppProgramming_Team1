@@ -1,26 +1,35 @@
 package com.mapteam1.lumpcolletor.ui.upgrade;
 
 import android.content.Context;
+import android.database.DataSetObservable;
+import android.database.DataSetObserver;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentTransaction;
 
 import com.mapteam1.lumpcolletor.R;
 import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.function.Upgrade;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ListView_Adapter extends BaseAdapter implements View.OnClickListener {
+public class ListView_Adapter extends ArrayAdapter<ListView_Upgrade> implements View.OnClickListener {
     // Activity에서 가져온 객체정보를 저장할 변수
     private ListView_Upgrade mUser;
     private Context mContext;
+    private ListView_Upgrade_main fragment;
 
     // ListView 내부 View들을 가르킬 변수들
     private ImageView UpgradeIcon;
@@ -29,15 +38,20 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
     private Button btnSend;
 
     // 리스트 아이템 데이터를 저장할 배열
-    private ArrayList<ListView_Upgrade> mUserData;
+    private ArrayList<ListView_Upgrade> mUserData = new ArrayList<ListView_Upgrade>();
 
-    public ListView_Adapter(Context context) {
-        super();
+    public ListView_Adapter(Context context, ArrayList<ListView_Upgrade> upgrades, ListView_Upgrade_main fragment) {
+        super(context, 0, upgrades);
         mContext = context;
-        mUserData = new ArrayList<ListView_Upgrade>();
+        mUserData = upgrades;
+        this.fragment = fragment;
     }
 
-    @Override
+    public ArrayList<ListView_Upgrade> getList(){
+        return this.mUserData;
+    }
+
+    //@Override
     /**
      * @return 아이템의 총 개수를 반환
      */
@@ -46,7 +60,8 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
         return mUserData.size();
     }
 
-    @Override
+
+    //@Override
     /**
      * @return 선택된 아이템을 반환
      */
@@ -95,7 +110,7 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
         }
 
         // 받아온 position 값을 이용하여 배열에서 아이템을 가져온다.
-        mUser = getItem(position);
+        mUser = this.getItem(position);
 
         // Tag를 이용하여 데이터와 뷰를 묶습니다.
         btnSend.setTag(mUser);
@@ -126,6 +141,7 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
         // TODO Auto-generated method stub
 
         // Tag를 이용하여 Data를 가져옵니다.
+
         ListView_Upgrade clickItem = (ListView_Upgrade) v.getTag();
         boolean ret = false;
         switch (v.getId()) {
@@ -139,16 +155,7 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
                     clickItem.setCost(String.valueOf(upgradeItem.getuCost()));
 
                     setItem(clickItem.getIndex(), clickItem);
-                    
-                    tvUserName = (TextView) v.findViewById(R.id.upgrade_name);
-                    tvUserPhoneNumber = (TextView) v
-                            .findViewById(R.id.upgrade_info);
-                    btnSend = (Button) v.findViewById(R.id.btn_send);
-
-                    tvUserName.setText(clickItem.getName());
-                    tvUserPhoneNumber.setText(clickItem.getChanges());
-                    btnSend.setText(clickItem.getCost());
-                    btnSend.setOnClickListener(this);
+                    this.fragment.refresh();
 
                     Toast.makeText(mContext, clickItem.getName()+" 업그레이드 성공",
                             Toast.LENGTH_SHORT).show();

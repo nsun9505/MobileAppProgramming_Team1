@@ -32,7 +32,7 @@ public interface GameInterface {
      int getCurrentLevel();
      int getSearchValue();
      int getCurrentExp();
-    int getMoney();
-    int getMaxSearchValue();
-    int getMaxExp();
+     int getMoney();
+     int getMaxSearchValue();
+     int getMaxExp();
 }

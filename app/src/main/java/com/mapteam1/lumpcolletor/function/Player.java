@@ -23,6 +23,9 @@ public class Player implements GameInterface {
     private static final int MULTIPLY_TYPE_MONEY = 3;
     private static final int MULTIPLY_TYPE_EXP = 4;
     private static final int MULTIPLY_TYPE_MAX_SEARCH_VALUE = 5;
+    private static final int OPEN_BOX_MONEY = 0;
+    private static final int OPEN_BOX_EXP = 1;
+    private static final int OPEN_BOX_SEARCHVALUE = 2;
 
     private static final int NUMBER_OF_UPGRADE = 6;
     private int maxSearchValue = 1000;
@@ -34,7 +37,7 @@ public class Player implements GameInterface {
     private int money;                // 재화
     private int numOfBox;            // 상자 개수
     private double multiply;
-    private HashMap<Integer, Upgrade> myUpgradeMap = null;
+    private ArrayList<Upgrade> upgradeList = null;
 
     // 가지고 있는 장식리스트
     private ArrayList<Decoration> decoList;
@@ -47,19 +50,19 @@ public class Player implements GameInterface {
         this.level = 1;
         this.currentExp = 0;
         this.searchValue = 1000;
-        this.money = 0;
+        this.money = 100000000;
         this.numOfBox = 0;
         this.maxExp = 100;
         this.decoList = new ArrayList<Decoration>();
-        this.myUpgradeMap = new HashMap<Integer, Upgrade>();
-        myUpgradeMap.put(0, new Upgrade("스킬 발동 확률 증가", "0% -> 5%", 100, 0));
-        myUpgradeMap.put(1, new Upgrade("스킬 발동 효과 증가", "0% -> 5%", 100, 0));
-        myUpgradeMap.put(2, new Upgrade("탐색도 획득량 증가", "0% -> 5%", 100, 0));
-        myUpgradeMap.put(3, new Upgrade("골드 획득량 증가", "0% -> 5%", 100, 0));
-        myUpgradeMap.put(4, new Upgrade("경험치 획득량 증가", "0% -> 5%", 100, 0));
-        myUpgradeMap.put(5, new Upgrade("최대 탐색도 증가", "0% -> 5%", 100, 0));
-        myUpgradeMap.put(6, new Upgrade("10초당 경험치 획득", "0% -> 5%", 100, 0));
-        myUpgradeMap.put(7, new Upgrade("10초당 탐색도 획득", "0% -> 5%", 100, 0));
+        this.upgradeList = new ArrayList<Upgrade>();
+        upgradeList.add(0, new Upgrade("스킬 발동 확률 증가", "0% -> 5%", 100, 0));
+        upgradeList.add(1, new Upgrade("스킬 발동 효과 증가", "0% -> 5%", 100, 0));
+        upgradeList.add(2, new Upgrade("탐색도 획득량 증가", "0% -> 5%", 100, 0));
+        upgradeList.add(3, new Upgrade("골드 획득량 증가", "0% -> 5%", 100, 0));
+        upgradeList.add(4, new Upgrade("경험치 획득량 증가", "0% -> 5%", 100, 0));
+        upgradeList.add(5, new Upgrade("최대 탐색도 증가", "0% -> 5%", 100, 0));
+        upgradeList.add(6, new Upgrade("10초당 경험치 획득", "0% -> 5%", 100, 0));
+        upgradeList.add(7, new Upgrade("10초당 탐색도 획득", "0% -> 5%", 100, 0));
     }
 
     private static class MyPlayer{
@@ -174,18 +177,18 @@ public class Player implements GameInterface {
         upgradeItem.doUpgrade();
         if(upgradeIdx == 5)
             this.setMaxSearchValue(this.getMaxSearchValue() + upgradeItem.applyEffect(this.getMaxSearchValue()));
-        this.getMyUpgradeMap().put(upgradeIdx, upgradeItem);
+        this.getUpgradeList().set(upgradeIdx, upgradeItem);
         this.setMoney(this.getMoney() - needMoney);
         return true;
     }
 
     public int getAdditionValueByMultiply(int type, int origin){
-        Upgrade item = this.getMyUpgradeMap().get(type);
+        Upgrade item = this.getUpgradeList().get(type);
         return item.applyEffect(origin);
     }
 
     public Upgrade getUpgradeItemByIdx(int idx){
-        return this.getMyUpgradeMap().get(idx);
+        return this.getUpgradeList().get(idx);
     }
 
     public int getCurrentLevel() {
@@ -207,6 +210,7 @@ public class Player implements GameInterface {
     public int getNumOfBox() {
         return this.numOfBox;
     }
+
     public int getMaxSearchValue() {
         return this.maxSearchValue;
     }
@@ -219,8 +223,8 @@ public class Player implements GameInterface {
         return this.multiply;
     }
 
-    public HashMap<Integer, Upgrade> getMyUpgradeMap(){
-        return this.myUpgradeMap;
+    public ArrayList<Upgrade> getUpgradeList(){
+        return this.upgradeList;
     }
 
     private void setMultiply(double multiply){

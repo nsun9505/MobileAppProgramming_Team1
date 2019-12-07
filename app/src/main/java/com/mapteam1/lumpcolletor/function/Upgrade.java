@@ -15,7 +15,7 @@ public class Upgrade {
 
     public void doUpgrade(){
         this.setuPoint(this.getuPoint() + 1);
-        this.setuCost((this.getuPoint()) * 100);
+        this.setuCost((this.getuPoint()+1) * 100);
         String newChanges = (this.getuPoint() * 5) + "% -> " + ((this.getuPoint()+1)*5)+"%";
         this.setuChanges(newChanges);
     }
