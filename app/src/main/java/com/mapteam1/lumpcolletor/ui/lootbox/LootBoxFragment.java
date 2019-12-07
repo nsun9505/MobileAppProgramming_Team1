@@ -25,7 +25,14 @@ public class LootBoxFragment extends Fragment {
         lootBoxViewModel =ViewModelProviders.of(this).get(LootBoxViewModel.class);
         View root = inflater.inflate(R.layout.fragment_lootbox, container, false);
 
-        int img[] = {};
+        int img[] = {
+                R.drawable.ic_upgrade_0,
+                R.drawable.ic_upgrade_1,
+                R.drawable.ic_upgrade_2,
+                R.drawable.ic_upgrade_3,
+                R.drawable.ic_upgrade_4,
+                R.drawable.ic_upgrade_5,
+                R.drawable.ic_upgrade_};
 
         MyAdapter adapter = new MyAdapter (
                 getActivity().getApplicationContext(),

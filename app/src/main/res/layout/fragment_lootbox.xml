@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_openitem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:text="ItemList"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    <Button
+        android:id="@+id/btn_lootbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="상자깡"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridView
         android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="2dip"
-        android:verticalSpacing="4dip"
-        android:horizontalSpacing="4dip"
+        android:columnWidth="72dp"
+        android:gravity="center"
+        android:horizontalSpacing="4dp"
         android:numColumns="auto_fit"
-        android:columnWidth="72dip"
+        android:padding="2dip"
         android:stretchMode="columnWidth"
-        android:gravity="center"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:verticalSpacing="4dp" />
+</LinearLayout>
