@@ -11,6 +11,7 @@ public class WorkThread extends Thread {
     public static final int UPDATE_EXP = 3;
     public static final int UPDATE_SEARCHVALUE = 4;
     public static final int UPDATE_MAX_SEARCH_VALUE = 5;
+    public static final int UPDATE_NUM_OF_BOX = 6;
     public static final int SEND_STOP = 0;
     boolean stopped = false;
     Handler mHandler;
@@ -31,6 +32,7 @@ public class WorkThread extends Thread {
             int oldLevel = Player.getPlayer().getCurrentLevel();
             float oldExp = Player.getPlayer().getCurrentExp();
             int oldMaxSearchValue = Player.getPlayer().getMaxSearchValue();
+            int oldNumberOfBox = Player.getPlayer().getNumOfBox();
 
             while(true) {
                 if (oldExp != Player.getPlayer().getCurrentExp()) {
@@ -68,6 +70,14 @@ public class WorkThread extends Thread {
                     oldMaxSearchValue = Player.getPlayer().getMaxSearchValue();
                     message.what = UPDATE_MAX_SEARCH_VALUE;
                     message.arg1 = oldMaxSearchValue;
+                    mHandler.sendMessage(message);
+                }
+                if(oldNumberOfBox != Player.getPlayer().getNumOfBox()){
+                    Message message = mHandler.obtainMessage();
+                    oldNumberOfBox = Player.getPlayer().getNumOfBox();
+                    String numOfBox = String.valueOf(oldNumberOfBox);
+                    message.what = UPDATE_NUM_OF_BOX;
+                    message.obj = numOfBox;
                     mHandler.sendMessage(message);
                 }
                 try {

@@ -126,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
                     maxSearchValue.setMax(msg.arg1);
                     maxSearchValue.setProgress(Player.getPlayer().getSearchValue());
                     break;
+                case WorkThread.UPDATE_NUM_OF_BOX:
+                    TextView box = (TextView)findViewById(R.id.textView5);
+                    box.setText(msg.obj.toString());
             }
           }
         };

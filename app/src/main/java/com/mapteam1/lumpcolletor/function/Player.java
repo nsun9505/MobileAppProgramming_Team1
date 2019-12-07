@@ -49,8 +49,8 @@ public class Player implements GameInterface {
         this.multiply = 0.0;
         this.level = 1;
         this.currentExp = 0;
-        this.searchValue = 1000;
-        this.money = 100000000;
+        this.searchValue = 0;
+        this.money = 0;
         this.numOfBox = 0;
         this.maxExp = 100;
         this.decoList = new ArrayList<Decoration>();
@@ -87,6 +87,8 @@ public class Player implements GameInterface {
         if (currentExp >= this.getMaxExp()) {
             this.setExp(this.getCurrentExp() - this.getMaxExp());
             this.UpdateMaxExp();
+            this.increaseNumberOfBox();
+            this.levelUp();
             return LEVELUP;
         }
 
@@ -152,12 +154,21 @@ public class Player implements GameInterface {
         // 랜덤으로 1~100사이의 숫자 생성
         // 1~90사이의 수는 Money, 91~100 사이의 수는 장식 획득
         int num = getRandom(100);
+        int ret = num%3;
+        switch(ret){
+            case OPEN_BOX_MONEY:
+                this.setMoney(this.getMoney() + 100);
+                break;
+            case OPEN_BOX_EXP:
+                this.increaseExp(100);
+                break;
+            case OPEN_BOX_SEARCHVALUE:
+                this.increaseSearchValue(100);
+                break;
+        }
 
         // 상자를 열어서 얻을 수 있는 재화의 양은 1~200사이
-        if (num >= 1 && num <= 90)
-            return 1;                // 1일 경우 updateMoney 실행
-        else
-            return 2;                // 2일 경우 addDecoration 실행
+        return ret;
     }
 
     private int getRandom(int limit) {
@@ -185,6 +196,10 @@ public class Player implements GameInterface {
     public int getAdditionValueByMultiply(int type, int origin){
         Upgrade item = this.getUpgradeList().get(type);
         return item.applyEffect(origin);
+    }
+
+    public void  openBoxGetMoney(){
+        this.setMoney(this.getMoney() + 100);
     }
 
     public Upgrade getUpgradeItemByIdx(int idx){

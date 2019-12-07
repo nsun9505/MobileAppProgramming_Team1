@@ -95,8 +95,7 @@ public class GyroSystem {
                     if(Math.sqrt(Math.pow(currX-targetX,2)+Math.pow(currY-targetY,2))<0.05){
                         Toast.makeText(a,"CLEAR!!",Toast.LENGTH_SHORT).show();
 
-                        if(Player.getPlayer().increaseExp(10) == 1)
-                            Player.getPlayer().levelUp();
+                        Player.getPlayer().increaseExp(10);
                         Player.getPlayer().updateMoney();
                         Player.getPlayer().increaseSearchValue(10);
 
