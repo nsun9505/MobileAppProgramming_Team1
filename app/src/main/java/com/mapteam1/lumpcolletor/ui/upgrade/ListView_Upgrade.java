@@ -7,12 +7,14 @@ public class ListView_Upgrade {
     private String mName;
     private String mChanges;
     private String mCost;
+    private int mIndex;
 
-    ListView_Upgrade(Drawable icon, String name, String changes, String cost) {
+    ListView_Upgrade(Drawable icon, String name, String changes, String cost, int index) {
         mIcon = icon;
         mName = name;
         mChanges = changes;
         mCost = cost;
+        mIndex = index;
     }
 
     public Drawable getIcon(){return mIcon; }
@@ -28,4 +30,24 @@ public class ListView_Upgrade {
     public String  getCost() {
         return mCost;
     }
+
+    public int getIndex(){return mIndex;}
+
+    public void setIcon(Drawable mIcon) {
+        this.mIcon = mIcon;
+    }
+
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    public void setChanges(String mChanges) {
+        this.mChanges = mChanges;
+    }
+
+    public void setCost(String mCost) {
+        this.mCost = mCost;
+    }
+
+
 }

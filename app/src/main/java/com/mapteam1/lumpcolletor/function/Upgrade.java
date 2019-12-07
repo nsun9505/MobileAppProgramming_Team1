@@ -1,64 +1,58 @@
 package com.mapteam1.lumpcolletor.function;
 
 public class Upgrade {
-    private String upgradeName;
-    private String description;
-    private int upgradePoint;
-    private double multiply;
-    private double effect;
+    private String uName;
+    private String uChanges;
+    private int uCost;
+    private int uPoint;
 
-    public Upgrade(String upgradeName){
-        this.upgradePoint = 0;
-        this.upgradeName = upgradeName;
-        this.description = upgradeName;
-        this.multiply = 0;
-        this.effect = 0.0;
+    public Upgrade(String name, String changes, int cost, int point){
+        this.uName = name;
+        this.uChanges = changes;
+        this.uCost = cost;
+        this.uPoint = point;
     }
 
-    public void upgradeItem(){
-        this.setUpgradePoint(this.getUpgradePoint() + 1);
-        this.setEffect(this.getUpgradePoint() * 0.05);
+    public void doUpgrade(){
+        this.setuPoint(this.getuPoint() + 1);
+        this.setuCost((this.getuPoint()) * 100);
+        String newChanges = (this.getuPoint() * 5) + "% -> " + ((this.getuPoint()+1)*5)+"%";
+        this.setuChanges(newChanges);
     }
 
     public int applyEffect(int origin){
-        return (int)(origin * this.getEffect());
+        return (int)((this.getuPoint() * 0.05) * origin);
     }
 
-    // 강화 비용은 스킬 포인터에 의해 결정된다.
-    public String getUpgradeName() {
-        return upgradeName;
+    public void setuName(String uName) {
+        this.uName = uName;
     }
 
-    public int getUpgradePoint(){
-        return this.upgradePoint;
+    public void setuChanges(String uChanges) {
+        this.uChanges = uChanges;
     }
 
-    public double getEffect(){
-        return this.effect;
+    public void setuCost(int uCost) {
+        this.uCost = uCost;
     }
 
-    public void setUpgradePoint(int upgradPoint){
-        this.upgradePoint = upgradPoint;
+    public void setuPoint(int uPoint) {
+        this.uPoint = uPoint;
     }
 
-    public void setUpgradeName(String upgradName) {
-        this.upgradeName = upgradName;
+    public String getuName() {
+        return uName;
     }
 
-    public String getDesciption() {
-        return description;
+    public String getuChanges() {
+        return uChanges;
     }
 
-    public void setDesciption(String description) {
-        this.description = description;
+    public int getuCost() {
+        return uCost;
     }
 
-    public void setEffect(double effect){
-        this.effect = effect;
+    public int getuPoint() {
+        return uPoint;
     }
-
-    public String nextUpgradeContent(){
-        return (this.getEffect() * 100) + " -> " + (this.getEffect() + 0.05);
-    }
-
 }

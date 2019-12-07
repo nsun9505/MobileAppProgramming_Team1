@@ -52,12 +52,14 @@ public class Player implements GameInterface {
         this.maxExp = 100;
         this.decoList = new ArrayList<Decoration>();
         this.myUpgradeMap = new HashMap<Integer, Upgrade>();
-        myUpgradeMap.put(0, new Upgrade("스킬 발동 확률 증가"));
-        myUpgradeMap.put(1, new Upgrade("스킬 발동 효과 증가"));
-        myUpgradeMap.put(2, new Upgrade("탐색도 획득량 증가"));
-        myUpgradeMap.put(3, new Upgrade("골드 획득량 증가"));
-        myUpgradeMap.put(4, new Upgrade("경험치 획득량 증가"));
-        myUpgradeMap.put(5, new Upgrade("최대 탐색도 증가"));
+        myUpgradeMap.put(0, new Upgrade("스킬 발동 확률 증가", "0% -> 5%", 100, 0));
+        myUpgradeMap.put(1, new Upgrade("스킬 발동 효과 증가", "0% -> 5%", 100, 0));
+        myUpgradeMap.put(2, new Upgrade("탐색도 획득량 증가", "0% -> 5%", 100, 0));
+        myUpgradeMap.put(3, new Upgrade("골드 획득량 증가", "0% -> 5%", 100, 0));
+        myUpgradeMap.put(4, new Upgrade("경험치 획득량 증가", "0% -> 5%", 100, 0));
+        myUpgradeMap.put(5, new Upgrade("최대 탐색도 증가", "0% -> 5%", 100, 0));
+        myUpgradeMap.put(6, new Upgrade("10초당 경험치 획득", "0% -> 5%", 100, 0));
+        myUpgradeMap.put(7, new Upgrade("10초당 탐색도 획득", "0% -> 5%", 100, 0));
     }
 
     private static class MyPlayer{
@@ -159,63 +161,22 @@ public class Player implements GameInterface {
         return (int) (Math.random() * limit) + 1;
     }
 
-    // 3차 보상 : 장식 추가
-    public int addDecoration() {
-        // 랜덤으로 장식 생성 후 추가
-        Decoration newDeco = new Decoration();
-        ArrayList<Decoration> curDecoList = this.getDecorationList();
-        curDecoList.add(newDeco);
-        return 1;                    // SUCCESS
-    }
-
-    public boolean upgrade(int position){
-        HashMap<Integer, Upgrade> curUpgradeMap = this.getMyUpgradeMap();
-        Upgrade upgradeItem = curUpgradeMap.get(position);
+    public boolean upgrade(int upgradeIdx){
+        Upgrade upgradeItem = this.getUpgradeItemByIdx(upgradeIdx);
         int curMoney = this.getMoney();
-        int needMoney = upgradeItem.getUpgradePoint() * 100;
+        int needMoney = upgradeItem.getuCost();
 
         // 가지고 있는 돈이 부족한 경우 upgrade 실패
         if(needMoney > curMoney)
             return false;
 
         // 최대 탐색도 증가 업그레이드 시 수행
-        if(position == MULTIPLY_TYPE_MAX_SEARCH_VALUE){
-            this.setMaxSearchValue(this.getMaxSearchValue() + 100);
-        }
-
-        // 가지고 있는 돈이 충분한 경우 업그레이드 수행 후 money 차감
-        upgradeItem.upgradeItem();
-
-        curUpgradeMap.remove(position);
-        curUpgradeMap.put(position, upgradeItem);
+        upgradeItem.doUpgrade();
+        if(upgradeIdx == 5)
+            this.setMaxSearchValue(this.getMaxSearchValue() + upgradeItem.applyEffect(this.getMaxSearchValue()));
+        this.getMyUpgradeMap().put(upgradeIdx, upgradeItem);
         this.setMoney(this.getMoney() - needMoney);
         return true;
-    }
-
-    // 수정 필요
-    // 3차 보상 : 강화
-    // 강화할 pivot을 선택 후 강화 가능
-    public int reinforce(int selected) {
-        // 먼저 강화할 pivot선택, pivot이 하나도 없어도 강화탭에 들어갈 수 있음.
-        // 재화(money)를 소모하여 강화
-        ArrayList<Decoration> curDecoList = this.getDecorationList();
-
-        // 현재 가지고 있는 장식의 개수가 0또는 개수가 현재 가지고 있는 양보다 넘는다면 에러, 리턴 -1
-        if (curDecoList.size() == 0 || curDecoList.size() < selected)
-            return -1;
-
-        // 강화할 아이템 선택
-        Decoration reinforced_deco = curDecoList.get(selected);
-
-		/*
-		if(this.getMoney() < reinforced_deco.getNeedMoney())
-			return -1;
-		*/
-
-        // 선택된 장식 강화 후 현재 장식 리스트 갱신
-        // reinforced_deco.reinforce();
-        // curDecoList.set(selected, reinforced_deco);
-        return 1;                                        // SUCCESS
     }
 
     public int getAdditionValueByMultiply(int type, int origin){
@@ -223,7 +184,7 @@ public class Player implements GameInterface {
         return item.applyEffect(origin);
     }
 
-    public Upgrade getMyStatsByIdx(int idx){
+    public Upgrade getUpgradeItemByIdx(int idx){
         return this.getMyUpgradeMap().get(idx);
     }
 
@@ -241,10 +202,6 @@ public class Player implements GameInterface {
 
     public int getMoney() {
         return this.money;
-    }
-
-    public ArrayList<Decoration> getDecorationList() {
-        return this.decoList;
     }
 
     public int getNumOfBox() {

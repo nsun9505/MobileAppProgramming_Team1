@@ -1,6 +1,7 @@
 package com.mapteam1.lumpcolletor.ui.upgrade;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.mapteam1.lumpcolletor.R;
 import com.mapteam1.lumpcolletor.function.Player;
+import com.mapteam1.lumpcolletor.function.Upgrade;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,10 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
         return 0;
     }
 
+    public void setItem(int index, ListView_Upgrade newItem){
+        this.mUserData.set(index, newItem);
+    }
+
     @Override
     /**
      * getView
@@ -100,27 +106,11 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
             if (mUser.getIcon() != null) {
                 UpgradeIcon.setImageDrawable(mUser.getIcon());
             }
-<<<<<<< HEAD
-            tvUserName.setText(mUser.getUserName());
-            tvUserPhoneNumber.setText(mUser.getUserPhoneNumber());
-            final int updateIdx = position;
-            btnSend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    boolean ret = Player.getPlayer().upgrade(updateIdx);
-                    if(ret == false){
-                        //
-                    }else {
-                        //
-                    }
-                }
-            });
-=======
+
             tvUserName.setText(mUser.getName());
             tvUserPhoneNumber.setText(mUser.getChanges());
             btnSend.setText(mUser.getCost());
             btnSend.setOnClickListener(this);
->>>>>>> fa27324c7f236489b275f3833a20d744028dc41b
         }
         // 완성된 아이템 뷰를 반환합니다.
         return v;
@@ -137,11 +127,36 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
 
         // Tag를 이용하여 Data를 가져옵니다.
         ListView_Upgrade clickItem = (ListView_Upgrade) v.getTag();
-
+        boolean ret = false;
         switch (v.getId()) {
             case R.id.btn_send:
-                Toast.makeText(mContext, clickItem.getChanges(),
-                        Toast.LENGTH_SHORT).show();
+                ret = Player.getPlayer().upgrade(clickItem.getIndex());
+                if(ret == true){
+                    Upgrade upgradeItem = Player.getPlayer().getUpgradeItemByIdx(clickItem.getIndex());
+
+                    clickItem.setName(upgradeItem.getuName());
+                    clickItem.setChanges(upgradeItem.getuChanges());
+                    clickItem.setCost(String.valueOf(upgradeItem.getuCost()));
+
+                    setItem(clickItem.getIndex(), clickItem);
+
+
+                    tvUserName = (TextView) v.findViewById(R.id.upgrade_name);
+                    tvUserPhoneNumber = (TextView) v
+                            .findViewById(R.id.upgrade_info);
+                    btnSend = (Button) v.findViewById(R.id.btn_send);
+
+                    tvUserName.setText(clickItem.getName());
+                    tvUserPhoneNumber.setText(clickItem.getChanges());
+                    btnSend.setText(clickItem.getCost());
+                    btnSend.setOnClickListener(this);
+
+                    Toast.makeText(mContext, clickItem.getName()+" 업그레이드 성공",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, "골드가 부족합니다.",
+                            Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
