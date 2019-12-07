@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.function.Player;
 
 public class ListView_Upgrade_main  extends Fragment {
    // private ListView userList;

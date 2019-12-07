@@ -6,6 +6,8 @@ import android.widget.TextView;
 import com.mapteam1.lumpcolletor.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Player implements GameInterface {
@@ -15,10 +17,14 @@ public class Player implements GameInterface {
     private static final int NOTMAXSEARCHVALUE = 0;
     private static final int COMPLETEPIVOT = 1;
     private static final int NOTCOMPLETEPIVOT = 0;
-    private static final int MULTIPLY_TYPE_EXP = 1;
-    private static final int MULTIPLY_TYPE_SAERCHVALUE = 2;
+    private static final int MULTIPLY_TYPE_SKILL_PROBABILITY = 0;
+    private static final int MULTIPLY_TYPE_SKILL_EFFECT = 1;
+    private static final int MULTIPLY_TYPE_SEARCHVALUE = 2;
     private static final int MULTIPLY_TYPE_MONEY = 3;
-    private static final int NUMBER_OF_SKILL = 6;
+    private static final int MULTIPLY_TYPE_EXP = 4;
+    private static final int MULTIPLY_TYPE_MAX_SEARCH_VALUE = 5;
+
+    private static final int NUMBER_OF_UPGRADE = 6;
     private int maxSearchValue = 1000;
 
     private int maxExp;
@@ -28,9 +34,12 @@ public class Player implements GameInterface {
     private int money;                // 재화
     private int numOfBox;            // 상자 개수
     private double multiply;
+    private HashMap<Integer, Upgrade> myUpgradeMap = null;
 
     // 가지고 있는 장식리스트
     private ArrayList<Decoration> decoList;
+
+    // 싱글톤
     private static Player myPlayer;
 
     private Player(){
@@ -42,7 +51,14 @@ public class Player implements GameInterface {
         this.numOfBox = 0;
         this.maxExp = 100;
         this.decoList = new ArrayList<Decoration>();
-        }
+        this.myUpgradeMap = new HashMap<Integer, Upgrade>();
+        myUpgradeMap.put(0, new Upgrade("스킬 발동 확률 증가"));
+        myUpgradeMap.put(1, new Upgrade("스킬 발동 효과 증가"));
+        myUpgradeMap.put(2, new Upgrade("탐색도 획득량 증가"));
+        myUpgradeMap.put(3, new Upgrade("골드 획득량 증가"));
+        myUpgradeMap.put(4, new Upgrade("경험치 획득량 증가"));
+        myUpgradeMap.put(5, new Upgrade("최대 탐색도 증가"));
+    }
 
     private static class MyPlayer{
         public static final Player PLAYER = new Player();
@@ -81,7 +97,7 @@ public class Player implements GameInterface {
     // 탐색도 증가 : 100% 도달 시 GETPIVOT 리턴, 아직 MAX가 100%가 아니면 NOTGETPIVOT
     public int increaseSearchValue(int getSearchValue) {
         // 현재 탐색도를 게임 클리어를 통해 얻은 탐색도만큼 증가시킨다.
-        this.setSearchValue(getSearchValue() + getSearchValue + getAdditionValueByMultiply(MULTIPLY_TYPE_SAERCHVALUE, getSearchValue));
+        this.setSearchValue(getSearchValue() + getSearchValue + getAdditionValueByMultiply(MULTIPLY_TYPE_SEARCHVALUE, getSearchValue));
 
         if (this.getSearchValue() >= this.getMaxSearchValue()) {
             this.setSearchValue(this.getMaxSearchValue());
@@ -152,6 +168,30 @@ public class Player implements GameInterface {
         return 1;                    // SUCCESS
     }
 
+    public boolean upgrade(int position){
+        HashMap<Integer, Upgrade> curUpgradeMap = this.getMyUpgradeMap();
+        Upgrade upgradeItem = curUpgradeMap.get(position);
+        int curMoney = this.getMoney();
+        int needMoney = upgradeItem.getUpgradePoint() * 100;
+
+        // 가지고 있는 돈이 부족한 경우 upgrade 실패
+        if(needMoney > curMoney)
+            return false;
+
+        // 최대 탐색도 증가 업그레이드 시 수행
+        if(position == MULTIPLY_TYPE_MAX_SEARCH_VALUE){
+            this.setMaxSearchValue(this.getMaxSearchValue() + 100);
+        }
+
+        // 가지고 있는 돈이 충분한 경우 업그레이드 수행 후 money 차감
+        upgradeItem.upgradeItem();
+
+        curUpgradeMap.remove(position);
+        curUpgradeMap.put(position, upgradeItem);
+        this.setMoney(this.getMoney() - needMoney);
+        return true;
+    }
+
     // 수정 필요
     // 3차 보상 : 강화
     // 강화할 pivot을 선택 후 강화 가능
@@ -179,8 +219,12 @@ public class Player implements GameInterface {
     }
 
     public int getAdditionValueByMultiply(int type, int origin){
-        return (int)(origin * this.getMultiply());
+        Upgrade item = this.getMyUpgradeMap().get(type);
+        return item.applyEffect(origin);
+    }
 
+    public Upgrade getMyStatsByIdx(int idx){
+        return this.getMyUpgradeMap().get(idx);
     }
 
     public int getCurrentLevel() {
@@ -218,6 +262,10 @@ public class Player implements GameInterface {
         return this.multiply;
     }
 
+    public HashMap<Integer, Upgrade> getMyUpgradeMap(){
+        return this.myUpgradeMap;
+    }
+
     private void setMultiply(double multiply){
         this.multiply = multiply;
     }
@@ -244,5 +292,9 @@ public class Player implements GameInterface {
 
     private void setMaxExp(int newMaxExp) {
         this.maxExp = newMaxExp;
+    }
+
+    private void setMaxSearchValue(int maxSearchValue){
+        this.maxSearchValue = maxSearchValue;
     }
 }

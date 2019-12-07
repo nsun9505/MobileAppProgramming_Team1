@@ -121,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
                     ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
                     searchProgress.setProgress(msg.arg1);
                     break;
+                case WorkThread.UPDATE_MAX_SEARCH_VALUE:
+                    ProgressBar maxSearchValue = (ProgressBar)findViewById(R.id.progressBar2);
+                    maxSearchValue.setMax(msg.arg1);
+                    break;
             }
           }
         };

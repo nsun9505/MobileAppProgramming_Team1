@@ -10,6 +10,7 @@ public class WorkThread extends Thread {
     public static final int UPDATE_MONEY = 2;
     public static final int UPDATE_EXP = 3;
     public static final int UPDATE_SEARCHVALUE = 4;
+    public static final int UPDATE_MAX_SEARCH_VALUE = 5;
     public static final int SEND_STOP = 0;
     boolean stopped = false;
     Handler mHandler;
@@ -29,6 +30,7 @@ public class WorkThread extends Thread {
             float oldSearchValue = Player.getPlayer().getSearchValue();
             int oldLevel = Player.getPlayer().getCurrentLevel();
             float oldExp = Player.getPlayer().getCurrentExp();
+            int oldMaxSearchValue = Player.getPlayer().getMaxSearchValue();
 
             while(true) {
                 if (oldExp != Player.getPlayer().getCurrentExp()) {
@@ -59,6 +61,13 @@ public class WorkThread extends Thread {
                     String money = String.valueOf(oldMoney);
                     message.what = UPDATE_MONEY;
                     message.obj = money;
+                    mHandler.sendMessage(message);
+                }
+                if(oldMaxSearchValue != Player.getPlayer().getMaxSearchValue()){
+                    Message message = mHandler.obtainMessage();
+                    oldMaxSearchValue = Player.getPlayer().getMaxSearchValue();
+                    message.what = UPDATE_MAX_SEARCH_VALUE;
+                    message.arg1 = oldMaxSearchValue;
                     mHandler.sendMessage(message);
                 }
                 try {

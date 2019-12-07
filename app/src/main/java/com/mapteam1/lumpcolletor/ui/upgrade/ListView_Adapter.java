@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.function.Player;
 
 import java.util.ArrayList;
 
@@ -102,7 +103,18 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
             }
             tvUserName.setText(mUser.getUserName());
             tvUserPhoneNumber.setText(mUser.getUserPhoneNumber());
-            btnSend.setOnClickListener(this);
+            final int updateIdx = position;
+            btnSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    boolean ret = Player.getPlayer().upgrade(updateIdx);
+                    if(ret == false){
+                        //
+                    }else {
+                        //
+                    }
+                }
+            });
         }
         // 완성된 아이템 뷰를 반환합니다.
         return v;
