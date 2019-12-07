@@ -3,23 +3,29 @@ package com.mapteam1.lumpcolletor.ui.upgrade;
 import android.graphics.drawable.Drawable;
 
 public class ListView_Upgrade {
-    private Drawable mUserIcon;
-    private String mUserName;
-    private String mUserPhoneNumber;
+    private Drawable mIcon;
+    private String mName;
+    private String mChanges;
+    private String mCost;
 
-    ListView_Upgrade(Drawable userIcon, String userName, String userPhoneNumber) {
-        mUserIcon = userIcon;
-        mUserName = userName;
-        mUserPhoneNumber = userPhoneNumber;
+    ListView_Upgrade(Drawable icon, String name, String changes, String cost) {
+        mIcon = icon;
+        mName = name;
+        mChanges = changes;
+        mCost = cost;
     }
 
-    public Drawable getUserIcon(){return mUserIcon; }
+    public Drawable getIcon(){return mIcon; }
 
-    public String getUserName() {
-        return mUserName;
+    public String getName() {
+        return mName;
     }
 
-    public String  getUserPhoneNumber() {
-        return mUserPhoneNumber;
+    public String getChanges() {
+        return mChanges;
+    }
+
+    public String  getCost() {
+        return mCost;
     }
 }
