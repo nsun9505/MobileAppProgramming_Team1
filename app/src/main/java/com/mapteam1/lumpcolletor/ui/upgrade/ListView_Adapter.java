@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +23,7 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
     private ImageView UpgradeIcon;
     private TextView tvUserName;
     private TextView tvUserPhoneNumber;
-    private ImageButton btnSend;
+    private Button btnSend;
 
     // 리스트 아이템 데이터를 저장할 배열
     private ArrayList<ListView_Upgrade> mUserData;
@@ -85,7 +84,7 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
             tvUserName = (TextView) v.findViewById(R.id.upgrade_name);
             tvUserPhoneNumber = (TextView) v
                     .findViewById(R.id.upgrade_info);
-            btnSend = (ImageButton) v.findViewById(R.id.btn_send);
+            btnSend = (Button) v.findViewById(R.id.btn_send);
         }
 
         // 받아온 position 값을 이용하여 배열에서 아이템을 가져온다.
@@ -97,11 +96,12 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
         // 데이터의 실존 여부를 판별합니다.
         if (mUser != null) {
             // 데이터가 있다면 갖고 있는 정보를 뷰에 알맞게 배치시킵니다.
-            if (mUser.getUserIcon() != null) {
-                UpgradeIcon.setImageDrawable(mUser.getUserIcon());
+            if (mUser.getIcon() != null) {
+                UpgradeIcon.setImageDrawable(mUser.getIcon());
             }
-            tvUserName.setText(mUser.getUserName());
-            tvUserPhoneNumber.setText(mUser.getUserPhoneNumber());
+            tvUserName.setText(mUser.getName());
+            tvUserPhoneNumber.setText(mUser.getChanges());
+            btnSend.setText(mUser.getCost());
             btnSend.setOnClickListener(this);
         }
         // 완성된 아이템 뷰를 반환합니다.
@@ -122,7 +122,7 @@ public class ListView_Adapter extends BaseAdapter implements View.OnClickListene
 
         switch (v.getId()) {
             case R.id.btn_send:
-                Toast.makeText(mContext, clickItem.getUserPhoneNumber(),
+                Toast.makeText(mContext, clickItem.getChanges(),
                         Toast.LENGTH_SHORT).show();
                 break;
         }
