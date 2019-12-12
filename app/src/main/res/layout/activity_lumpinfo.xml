@@ -26,14 +26,22 @@
         android:text="상세정보"
         app:autoSizeTextType="uniform"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <Button
         android:id="@+id/button_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:text="닫기"
         app:autoSizeTextType="uniform"/>
+
+    <Button
+        android:id="@+id/button_release"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="놓아주기"
+        app:autoSizeTextType="uniform"/>
+    </LinearLayout>
 
 </LinearLayout>

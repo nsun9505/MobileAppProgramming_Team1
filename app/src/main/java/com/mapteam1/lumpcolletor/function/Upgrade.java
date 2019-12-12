@@ -14,14 +14,20 @@ public class Upgrade {
     }
 
     public void doUpgrade(){
-        this.setuPoint(this.getuPoint() + 1);
-        this.setuCost((this.getuPoint()+1) * 100);
-        String newChanges = (this.getuPoint() * 5) + "% -> " + ((this.getuPoint()+1)*5)+"%";
-        this.setuChanges(newChanges);
+        uPoint++;
+        updateinfo();
+    }
+    public void updateinfo() {
+        uCost = (1 + uPoint) * 100;
+        uChanges = (uPoint * 5) + "% -> " + ((uPoint+1)*5)+"%";
     }
 
     public int applyEffect(int origin){
         return (int)((this.getuPoint() * 0.05) * origin);
+    }
+
+    public double applyEffect(){
+        return (this.getuPoint() * 0.05);
     }
 
     public void setuName(String uName) {
@@ -38,6 +44,7 @@ public class Upgrade {
 
     public void setuPoint(int uPoint) {
         this.uPoint = uPoint;
+        updateinfo();
     }
 
     public String getuName() {

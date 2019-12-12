@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.mapteam1.lumpcolletor.R;
-import com.mapteam1.lumpcolletor.lump.LumpGenerator;
+import com.mapteam1.lumpcolletor.function.Player;
 
 public class ShowLumpDetail extends Activity {
     @Override
@@ -16,13 +16,28 @@ public class ShowLumpDetail extends Activity {
 
         setContentView(R.layout.activity_lumpinfo);
 
-        int index = getIntent().getIntExtra("index", -1);
+        final int index = getIntent().getIntExtra("index", -1);
         ImageView charview = findViewById(R.id.char_view);
-        if (index >= 0) charview.setImageBitmap(LumpGenerator.getref()._test_imgs.get(index));
+        if (index >= 0) charview.setImageBitmap(Player.getPlayer().getLumpList().get(index).getBitmap());
         Button button_close = findViewById(R.id.button_close); //설정버튼
         button_close.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 mOnClose(v);
+            }
+        });
+
+        final Button button_release = findViewById(R.id.button_release);
+        button_release.setOnClickListener(new View.OnClickListener(){
+            int repeat = 3;
+
+            public void onClick(View v) {
+                if (repeat > 0) {
+                    button_release.setText(repeat+"회 더 눌러서 놓아주기");
+                    repeat--;
+                } else {
+                    Player.getPlayer().getLumpList().remove(index);
+                    mOnClose(v);
+                }
             }
         });
     }

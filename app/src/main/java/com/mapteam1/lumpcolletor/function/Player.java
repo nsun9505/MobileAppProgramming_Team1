@@ -4,6 +4,7 @@ package com.mapteam1.lumpcolletor.function;
 import android.widget.TextView;
 
 import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.lump.Lump;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,9 +29,9 @@ public class Player implements GameInterface {
     private static final int OPEN_BOX_SEARCHVALUE = 2;
 
     private static final int NUMBER_OF_UPGRADE = 6;
-    private int maxSearchValue = 1000;
-
+    private int maxSearchValue;
     private int maxExp;
+
     private int level;                // 레벨
     private int currentExp;                // 경험치
     private int searchValue;        // 탐색도(탐색치)
@@ -41,6 +42,7 @@ public class Player implements GameInterface {
 
     // 가지고 있는 장식리스트
     private ArrayList<Decoration> decoList;
+    private ArrayList<Lump> lumpList;
 
     // 싱글톤
     private static Player myPlayer;
@@ -53,6 +55,7 @@ public class Player implements GameInterface {
         this.money = 0;
         this.numOfBox = 0;
         this.maxExp = 100;
+        this.maxSearchValue = 100;
         this.decoList = new ArrayList<Decoration>();
         this.upgradeList = new ArrayList<Upgrade>();
         upgradeList.add(0, new Upgrade("스킬 발동 확률 증가", "0% -> 5%", 100, 0));
@@ -63,6 +66,7 @@ public class Player implements GameInterface {
         upgradeList.add(5, new Upgrade("최대 탐색도 증가", "0% -> 5%", 100, 0));
         upgradeList.add(6, new Upgrade("10초당 경험치 획득", "0% -> 5%", 100, 0));
         upgradeList.add(7, new Upgrade("10초당 탐색도 획득", "0% -> 5%", 100, 0));
+        this.lumpList = new ArrayList<>();
     }
 
     private static class MyPlayer{
@@ -71,7 +75,6 @@ public class Player implements GameInterface {
     public static Player getPlayer() {
         return MyPlayer.PLAYER;
     }
-
     // 1차 보상 : 경험치
     // 경험치 증가 -> MAX 도달 시 LEVELUP 리턴
     public int increaseExp(int getExp) {
@@ -227,6 +230,7 @@ public class Player implements GameInterface {
     }
 
     public int getMaxSearchValue() {
+        maxSearchValue = (int) (100 * (upgradeList.get(5).applyEffect() + 1));
         return this.maxSearchValue;
     }
 
@@ -272,5 +276,40 @@ public class Player implements GameInterface {
 
     private void setMaxSearchValue(int maxSearchValue){
         this.maxSearchValue = maxSearchValue;
+    }
+
+    public ArrayList<Lump> getLumpList() {
+        return lumpList;
+    }
+
+    public void Load(SaveData saveData) {
+        level = saveData.level;
+        currentExp = saveData.exp;
+        searchValue = saveData.searchprog;
+        money = saveData.gold;
+        numOfBox = saveData.boxes;
+        maxExp = getMaxExp();
+        maxSearchValue = getMaxSearchValue();
+        saveData.translateLumpsStringSet(lumpList);
+        int[] upgradePoints = saveData.translateUpgradesString();
+        for(int i = 0; i < upgradePoints.length; i++) {
+            upgradeList.get(i).setuPoint(upgradePoints[i]);
+        }
+    }
+
+    public void Save(SaveData saveData) {
+        saveData.level = level;
+        saveData.exp = currentExp;
+        saveData.searchprog = searchValue;
+        saveData.gold = money;
+        saveData.boxes = numOfBox;
+        saveData.loadLumpsFromArrayList(lumpList);
+        int upgradeNumber = upgradeList.size();
+        int[] upgradePoints = new int[upgradeNumber];
+        for(int i = 0; i < upgradeNumber; i++) {
+            upgradePoints[i] = upgradeList.get(i).getuPoint();
+        }
+        saveData.loadUpgradesFromList(upgradePoints);
+        saveData.Save();
     }
 }

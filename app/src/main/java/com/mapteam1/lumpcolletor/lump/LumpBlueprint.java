@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 public class LumpBlueprint {
+    private final static String REGEX = "/";
     ArrayList<PartsData> layer = new ArrayList<>();
 
     public Bitmap Produce() {
@@ -33,8 +34,34 @@ public class LumpBlueprint {
             matrix.postTranslate(160+data.xpos, 160+data.ypos);
             canvas.drawBitmap(parts_spr, matrix, paint);
         }
-        LumpGenerator.getref()._test_imgs.add(result);
         return result;
+    }
+
+    public String Encode() {
+        StringBuilder encoded = new StringBuilder();
+        int i, layercnt = layer.size();
+        for (i = 0; i < layercnt; i++) {
+            if (i > 0) encoded.append(REGEX);
+            encoded.append(layer.get(i).Encode());
+        }
+        return encoded.toString();
+    }
+
+    public void Decode(String data) {
+        String[] layerStrList = data.split(REGEX);
+        PartsData partsData;
+        int i, layercnt = layerStrList.length;
+        for (i = 0; i < layercnt; i++) {
+            partsData = new PartsData();
+            partsData.Decode(layerStrList[i]);
+            layer.add(partsData);
+        }
+    }
+
+    public void _test_stringify() {
+        String encoded = Encode();
+        layer.clear();
+        Decode(encoded);
     }
 }
 

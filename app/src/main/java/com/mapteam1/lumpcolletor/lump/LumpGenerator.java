@@ -27,7 +27,6 @@ public class LumpGenerator {
     private static final int RMIRROR = 32;
     private static final int RORIGIN = 64;
 
-    public ArrayList<Bitmap> _test_imgs = new ArrayList<>();
     public String _test_error_msg = "no error";
     JSONArray blueprints;
     JSONObject parts_size;

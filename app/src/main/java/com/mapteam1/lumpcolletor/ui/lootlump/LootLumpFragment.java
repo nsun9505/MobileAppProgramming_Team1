@@ -23,6 +23,7 @@ import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.lump.LumpBlueprint;
 
 public class LootLumpFragment extends Fragment {
+    public static final int LOOT_LUMP_COST = 100;
 
     private LootLumpViewModel lootLumpViewModel;
     private Context context;
@@ -48,15 +49,16 @@ public class LootLumpFragment extends Fragment {
         final Button button = root.findViewById(R.id.LootLumpButton);
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                boolean ret = Player.getPlayer().getParts(100);
+                boolean ret = Player.getPlayer().getParts(LOOT_LUMP_COST);
                 if(ret == false){
-                    Toast.makeText(container.getContext(), "fail....", Toast.LENGTH_LONG).show();
+                    textView.setText("탐색도가 부족합니다.");
                 }else {
-                    Toast.makeText(container.getContext(), "success....", Toast.LENGTH_LONG).show();
-                    lootLumpViewModel.changeLump();
+                    lootLumpViewModel.createLump();
+                    button.setText(String.format("덩어리 뽑기(%d/%d)", Player.getPlayer().getSearchValue(), LOOT_LUMP_COST));
                 }
             }
         });
+        button.setText(String.format("덩어리 뽑기(%d/%d)", Player.getPlayer().getSearchValue(), LOOT_LUMP_COST));
         /*lootLumpViewModel.getBlueprint().observe(this, new Observer<LumpBlueprint>() {
             @Override
             public void onChanged(@Nullable LumpBlueprint s) {

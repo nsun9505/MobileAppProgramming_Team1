@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.function.Player;
+import com.mapteam1.lumpcolletor.lump.Lump;
 import com.mapteam1.lumpcolletor.lump.LumpGenerator;
 import com.mapteam1.lumpcolletor.ui.ShowLumpDetail;
 
@@ -34,8 +36,8 @@ public class ShowLumpFragment extends Fragment {
 
         MyAdapter adapter = new MyAdapter(
                 getActivity().getApplicationContext(),
-                R.layout.adapter_lump,       // GridView 항목의 레이아웃 row.xml
-                LumpGenerator.getref()._test_imgs);    // 데이터
+                R.layout.adapter_lump       // GridView 항목의 레이아웃 row.xml
+                );    // 데이터
         GridView gv1 = (GridView)root1.findViewById(R.id.grid1);
         gv1.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
     //    final TextView textView1 = root1.findViewById(R.id.text_showcharacter);
@@ -59,13 +61,13 @@ public class ShowLumpFragment extends Fragment {
 class MyAdapter extends BaseAdapter {
     Context context;
     int layout;
-    ArrayList<Bitmap> img;
+    ArrayList<Lump> img;
     LayoutInflater inf;
 
-    public MyAdapter(Context context, int layout, ArrayList<Bitmap> img) {
+    public MyAdapter(Context context, int layout) {
         this.context = context;
         this.layout = layout;
-        this.img = img;
+        img = Player.getPlayer().getLumpList();
         inf = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -90,7 +92,7 @@ class MyAdapter extends BaseAdapter {
         if (convertView==null)
             convertView = inf.inflate(layout, null);
         ImageView iv1 = (ImageView)convertView.findViewById(R.id.characterimageView);
-        iv1.setImageBitmap(img.get(position));
+        iv1.setImageBitmap(img.get(position).getBitmap());
 
         return convertView;
     }

@@ -13,6 +13,7 @@ import com.mapteam1.lumpcolletor.MainActivity;
 import com.mapteam1.lumpcolletor.R;
 import com.mapteam1.lumpcolletor.function.GameInterface;
 import com.mapteam1.lumpcolletor.function.Player;
+import com.mapteam1.lumpcolletor.lump.Lump;
 import com.mapteam1.lumpcolletor.lump.LumpBlueprint;
 import com.mapteam1.lumpcolletor.lump.LumpGenerator;
 
@@ -41,17 +42,9 @@ public class LootLumpViewModel extends ViewModel {
         mBitmap.setValue(LumpGenerator.getref().MakeBlueprint().Produce());
     }
 
-    public void gameClear(){
-        GameInterface player = Player.getPlayer();
-        int ret =  player.increaseExp(10);
-        if(ret == 1){
-            player.levelUp();
-            player.increaseNumberOfBox();
-        }
-        player.updateMoney();
-        ret = player.increaseSearchValue(10);
-        if(ret == 1){
-            // 탐색도 MAX 메시지
-        }
+    public void createLump() {
+        Lump lump = new Lump(LumpGenerator.getref().MakeBlueprint());
+        Player.getPlayer().getLumpList().add(lump);
+        mBitmap.setValue(lump.getBitmap());
     }
 }

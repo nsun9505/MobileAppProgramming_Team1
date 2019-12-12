@@ -14,18 +14,16 @@ import android.view.WindowManager;
 import com.mapteam1.lumpcolletor.function.GameInterface;
 import com.mapteam1.lumpcolletor.function.Player;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mapteam1.lumpcolletor.function.SaveData;
 import com.mapteam1.lumpcolletor.function.WorkThread;
 import com.mapteam1.lumpcolletor.lump.LumpGenerator;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import android.app.Activity;
-import android.widget.Button;
-import android.widget.ImageButton;
+
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private View decorView;
     private int uiOption;
     private GameInterface Ginterface = null;
+    private SaveData saveData = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void initGameInfo(){
         this.Ginterface = Player.getPlayer();
+        saveData = new SaveData(this);
+        Player.getPlayer().Load(saveData);
+
         TextView levelText = (TextView)findViewById(R.id.textView3);
         levelText.setText(String.valueOf(Ginterface.getCurrentLevel() +" LV"));
 
@@ -137,26 +139,9 @@ public class MainActivity extends AppCompatActivity {
         updateThread.start();
     }
 
-    public void gameClear(){
-        int ret =  Ginterface.increaseExp(10);
-        if(ret == 1){
-            Ginterface.levelUp();
-            Ginterface.increaseNumberOfBox();
-            TextView levelText = (TextView)findViewById(R.id.textView3);
-            levelText.setText(String.valueOf(Ginterface.getCurrentLevel() +" LV"));
-        }
-        Ginterface.updateMoney();
-        ret = Ginterface.increaseSearchValue(10);
-        if(ret == 1){
-
-        }
-        ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
-        expProgress.setProgress(Ginterface.getCurrentExp());
-
-        ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
-        searchProgress.setProgress(Ginterface.getSearchValue());
-
-        TextView moneyText = (TextView)findViewById(R.id.textView4);
-        moneyText.setText(String.valueOf(Ginterface.getMoney()));
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Player.getPlayer().Save(saveData);
     }
 }
