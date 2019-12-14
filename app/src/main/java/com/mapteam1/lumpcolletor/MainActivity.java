@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         expText.setText(String.format("%d/%d", cur, max));
         final ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
         expProgress.setProgress((cur * 100)/max);
+        expProgress.setMax(max);
 
         cur = Ginterface.getSearchValue();
         max = Ginterface.getMaxSearchValue();
