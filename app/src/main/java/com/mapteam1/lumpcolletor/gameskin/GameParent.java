@@ -3,17 +3,7 @@ package com.mapteam1.lumpcolletor.gameskin;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.util.Log;
-import android.view.View;
-
-import android.graphics.Matrix;
-import android.graphics.Paint;
-
-import com.mapteam1.lumpcolletor.lump.LumpGenerator;
-import com.mapteam1.lumpcolletor.lump.PartsData;
 
 import java.util.Random;
 
@@ -45,13 +35,16 @@ public class GameParent{
 
     public static GameParent RandomGame() {
         GameParent randomgame;
-        int randomindex = new Random().nextInt(2);
+        int randomindex = new Random().nextInt(3);
         switch(randomindex) {
             case 0:
-                randomgame = new movePoint();
+                randomgame = new gDowsing();
                 break;
             case 1:
-                randomgame = new gameSecond();
+                randomgame = new gHighlight();
+                break;
+            case 2:
+                randomgame = new gShapeSync();
                 break;
             default:
                 randomgame = new GameParent();

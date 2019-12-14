@@ -23,7 +23,8 @@ import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.lump.LumpBlueprint;
 
 public class LootLumpFragment extends Fragment {
-    public static final int LOOT_LUMP_COST = 100;
+    private static final String LOOT_LUMP_TEXT = "덩어리 뽑기 (필요 탐색도: %d, 현재 : %d)";
+    private static final int LOOT_LUMP_COST = 100;
 
     private LootLumpViewModel lootLumpViewModel;
     private Context context;
@@ -54,11 +55,11 @@ public class LootLumpFragment extends Fragment {
                     Toast.makeText(container.getContext(), "탐색도가 부족합니다.", Toast.LENGTH_LONG).show();
                 }else {
                     lootLumpViewModel.createLump();
-                    button.setText(String.format("덩어리 뽑기(%d/%d)", Player.getPlayer().getSearchValue(), LOOT_LUMP_COST));
+                    button.setText(String.format(LOOT_LUMP_TEXT, LOOT_LUMP_COST, Player.getPlayer().getSearchValue()));
                 }
             }
         });
-        button.setText(String.format("덩어리 뽑기(%d/%d)", Player.getPlayer().getSearchValue(), LOOT_LUMP_COST));
+        button.setText(String.format(LOOT_LUMP_TEXT, LOOT_LUMP_COST, Player.getPlayer().getSearchValue()));
         /*lootLumpViewModel.getBlueprint().observe(this, new Observer<LumpBlueprint>() {
             @Override
             public void onChanged(@Nullable LumpBlueprint s) {
