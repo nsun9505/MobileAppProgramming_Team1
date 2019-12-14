@@ -2,6 +2,7 @@ package com.mapteam1.lumpcolletor.ui.minigame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,11 +11,14 @@ import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
+import com.mapteam1.lumpcolletor.R;
+import com.mapteam1.lumpcolletor.SettingFragment;
 import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.gameskin.GameParent;
 
@@ -31,6 +35,8 @@ public class GyroSystem {
     double targetX;
     double targetY;
 
+    int gyroSensitivity = 45;
+
     int height;
     int width;
 
@@ -41,16 +47,20 @@ public class GyroSystem {
     private double timestamp = 0.0;
     private double dt;
 
+
+
     GameParent game;
 
     public GyroSystem(final Activity a, final View root, final MinigameViewModel aa) {
         mySensorManager = (SensorManager) a.getSystemService(Context.SENSOR_SERVICE);
         myGyro = mySensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
+
         game = GameParent.RandomGame();
 
         targetX = getTargetX();
         targetY = getTargetY();
+
 
 
         gyroListener = new SensorEventListener() {
@@ -67,7 +77,7 @@ public class GyroSystem {
                 width = root.getWidth();
 
                 game.Update((float)currX,(float)currY,(float)targetX,(float)targetY);
-
+                gyroSensitivity = 45 - SettingFragment.getSeekBarSound();
 
                 if (dt - timestamp * NS2S != 0) {
 
@@ -88,8 +98,6 @@ public class GyroSystem {
 
                         targetX = getTargetX();
                         targetY = getTargetY();
-                        currX = 0.5;
-                        currY = 0.5;
 
                     }
 
@@ -135,12 +143,12 @@ public class GyroSystem {
 
         currX = roll*rad_to_dgr;
 
-        if(currX>45)
-            currX=45;
-        if(currX<-45)
-            currX=-45;
+        if(currX>gyroSensitivity)
+            currX=gyroSensitivity;
+        if(currX<-gyroSensitivity)
+            currX=-gyroSensitivity;
 
-        currX = (currX+45)/90;
+        currX = (currX+gyroSensitivity)/(gyroSensitivity*2);
 
         return currX;
 
@@ -151,13 +159,14 @@ public class GyroSystem {
 
         currY = pitch *rad_to_dgr;
 
-        if(currY>45)
-            currY=45;
-        if(currY<-45)
-            currY=-45;
+        if(currY>gyroSensitivity)
+            currY=gyroSensitivity;
+        if(currY<-gyroSensitivity)
+            currY=-gyroSensitivity;
 
-        currY = (currY+45)/90;
+        currY = (currY+gyroSensitivity)/(gyroSensitivity*2);
 
         return currY;
     }
+
 }
