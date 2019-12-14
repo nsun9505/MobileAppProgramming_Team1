@@ -71,6 +71,13 @@ public class WorkThread extends Thread {
                     message.obj = money;
                     mHandler.sendMessage(message);
                 }
+                if (oldMaxSearchValue != Player.getPlayer().getMaxSearchValue()){
+                    Message message = mHandler.obtainMessage();
+                    oldMaxSearchValue = Player.getPlayer().getMaxSearchValue();
+                    message.what = UPDATE_MAX_SEARCH_VALUE;
+                    message.arg1 = oldMaxSearchValue;
+                    mHandler.sendMessage(message);
+                }
                 if(oldNumberOfBox != Player.getPlayer().getNumOfBox()){
                     Message message = mHandler.obtainMessage();
                     oldNumberOfBox = Player.getPlayer().getNumOfBox();
