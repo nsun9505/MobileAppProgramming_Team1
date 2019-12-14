@@ -25,7 +25,7 @@ public class movePoint extends GameParent {
         Canvas canvas = new Canvas(GameScreen);
         Paint paint = new Paint();
 
-        Log.d("135135", "X: "+xpos+"  Y:"+ypos);
+        //Log.d("135135", "X: "+xpos+"  Y:"+ypos);
         paint.setColor(Color.WHITE);
         canvas.drawRect(0, 0, width, height, paint);
         paint.setColor(Color.BLACK);

@@ -37,6 +37,7 @@ public class MinigameFragment extends Fragment {
         gs = new GyroSystem(getActivity(),root,minigameViewModel);
 
 
+
         minigameViewModel.getBitmap().observe(this, new Observer<Bitmap>() {
             @Override
             public void onChanged(@Nullable Bitmap s) {
@@ -51,7 +52,6 @@ public class MinigameFragment extends Fragment {
     public void onResume() {
         super.onResume();
         gs.gyroOnResume();
-
     }
 
     public void onPause() {

@@ -5,11 +5,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.mapteam1.lumpcolletor.ui.minigame.GyroSystem;
+import com.mapteam1.lumpcolletor.ui.minigame.MinigameViewModel;
+
+
 public class SettingFragment extends Activity {
     private SeekBar seekBarSound;
+    static int sensitivity;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -36,11 +42,15 @@ public class SettingFragment extends Activity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt("sound",this.seekBarSound.getProgress());
-
+        sensitivity = this.seekBarSound.getProgress();
         editor.apply();
 
         Toast.makeText(this,"Setting Saved!",Toast.LENGTH_LONG).show();
 
         finish();
+    }
+
+    static public int getSeekBarSound() {
+        return sensitivity;
     }
 }
