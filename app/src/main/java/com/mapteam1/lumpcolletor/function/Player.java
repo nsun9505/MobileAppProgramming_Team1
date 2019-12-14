@@ -27,6 +27,7 @@ public class Player implements GameInterface {
     private static final int OPEN_BOX_MONEY = 0;
     private static final int OPEN_BOX_EXP = 1;
     private static final int OPEN_BOX_SEARCHVALUE = 2;
+    private static final int OPEN_BOX_BASE_VALUE = 100;
 
     private static final int NUMBER_OF_UPGRADE = 6;
     private int maxSearchValue;
@@ -52,8 +53,8 @@ public class Player implements GameInterface {
         this.level = 1;
         this.currentExp = 0;
         this.searchValue = 0;
-        this.money = 1000;
-        this.numOfBox = 0;
+        this.money = 0;
+        this.numOfBox = 100;
         this.maxExp = 100;
         this.maxSearchValue = 100;
         this.decoList = new ArrayList<Decoration>();
@@ -104,7 +105,7 @@ public class Player implements GameInterface {
     }
 
     public void UpdateMaxSearchValue() {
-        maxSearchValue = (int) (100 * (upgradeList.get(5).applyEffect() + 1));
+        maxSearchValue = (int) (100 * (upgradeList.get(MULTIPLY_TYPE_MAX_SEARCH_VALUE).applyEffect() + 1));
     }
 
     // 1차 보상 : 탐색도 증가
@@ -159,18 +160,17 @@ public class Player implements GameInterface {
         this.setNumOfBox(getNumOfBox() - 1);
 
         // 랜덤으로 1~100사이의 숫자 생성
-        // 1~90사이의 수는 Money, 91~100 사이의 수는 장식 획득
-        int num = getRandom(100);
+        int num = this.getRandom(OPEN_BOX_BASE_VALUE);
         int ret = num%3;
         switch(ret){
             case OPEN_BOX_MONEY:
-                this.setMoney(this.getMoney() + 100);
+                this.openBoxGetMoney();
                 break;
             case OPEN_BOX_EXP:
-                this.increaseExp(100);
+                this.increaseExp(OPEN_BOX_BASE_VALUE);
                 break;
             case OPEN_BOX_SEARCHVALUE:
-                this.increaseSearchValue(100);
+                this.increaseSearchValue(OPEN_BOX_BASE_VALUE);
                 break;
         }
 
@@ -193,8 +193,9 @@ public class Player implements GameInterface {
 
         // 최대 탐색도 증가 업그레이드 시 수행
         upgradeItem.doUpgrade();
-        if(upgradeIdx == 5)
-            this.setMaxSearchValue(this.getMaxSearchValue() + upgradeItem.applyEffect(this.getMaxSearchValue()));
+        if(upgradeIdx == MULTIPLY_TYPE_MAX_SEARCH_VALUE)
+            UpdateMaxSearchValue();
+        //    this.setMaxSearchValue(this.getMaxSearchValue() + upgradeItem.applyEffect(this.getMaxSearchValue()));
         this.getUpgradeList().set(upgradeIdx, upgradeItem);
         this.setMoney(this.getMoney() - needMoney);
         return true;
@@ -205,8 +206,10 @@ public class Player implements GameInterface {
         return item.applyEffect(origin);
     }
 
-    public void  openBoxGetMoney(){
-        this.setMoney(this.getMoney() + 100);
+    public int openBoxGetMoney(){
+        int ret = OPEN_BOX_BASE_VALUE + getAdditionValueByMultiply(MULTIPLY_TYPE_MONEY, OPEN_BOX_BASE_VALUE);;
+        this.setMoney(this.getMoney() + ret);
+        return ret;
     }
 
     public Upgrade getUpgradeItemByIdx(int idx){

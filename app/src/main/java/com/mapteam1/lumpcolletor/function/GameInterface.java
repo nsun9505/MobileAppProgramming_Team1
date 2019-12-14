@@ -26,7 +26,6 @@ public interface GameInterface {
     // 2차 보상
     // 상자까기 : 1차 보상의 상자를 얻거나(0), 장식을 얻거나(1)
      int openBox();
-    void  openBoxGetMoney();
 
 
     // 기본 정보를 출력하기 워해

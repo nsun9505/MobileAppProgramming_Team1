@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
                     searchText.setText(msg.obj.toString());
                     break;
                 case WorkThread.UPDATE_MAX_SEARCH_VALUE:
-                    ProgressBar maxSearchValue = (ProgressBar)findViewById(R.id.progressBar2);
-                    maxSearchValue.setMax(msg.arg1);
-                    maxSearchValue.setProgress(Player.getPlayer().getSearchValue());
+                    searchText.setText(msg.obj.toString());
+                    searchProgress.setMax(Player.getPlayer().getMaxSearchValue());
+                    searchProgress.setProgress(Player.getPlayer().getSearchValue());
                     break;
                 case WorkThread.UPDATE_NUM_OF_BOX:
                     boxText.setText(msg.obj.toString());

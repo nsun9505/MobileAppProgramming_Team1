@@ -25,6 +25,15 @@ public class LootBoxFragment extends Fragment {
     private static final int OPEN_BOX_MONEY = 0;
     private static final int OPEN_BOX_EXP = 1;
     private static final int OPEN_BOX_SEARCHVALUE = 2;
+    private static final int OPEN_BOX_RANDOM_NUMBER = 10000;
+    private static final int MULTIPLY_TYPE_SKILL_PROBABILITY = 0;
+    private static final int MULTIPLY_TYPE_SKILL_EFFECT = 1;
+    private static final int MULTIPLY_TYPE_SEARCHVALUE = 2;
+    private static final int MULTIPLY_TYPE_MONEY = 3;
+    private static final int MULTIPLY_TYPE_EXP = 4;
+    private static final int MULTIPLY_TYPE_MAX_SEARCH_VALUE = 5;
+    private static final int OPEN_BOX_BASE_VALUE = 100;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         lootBoxViewModel =ViewModelProviders.of(this).get(LootBoxViewModel.class);
@@ -65,15 +74,19 @@ public class LootBoxFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 int ret = Player.getPlayer().openBox();
+                int getBenefit = 0;
                 switch(ret) {
                     case OPEN_BOX_MONEY:
-                        Toast.makeText(tempContainer.getContext(), "100 GOLD 획득", Toast.LENGTH_SHORT).show();
+                        getBenefit = OPEN_BOX_BASE_VALUE + Player.getPlayer().getAdditionValueByMultiply(MULTIPLY_TYPE_MONEY,OPEN_BOX_BASE_VALUE);
+                        Toast.makeText(tempContainer.getContext(), getBenefit + " GOLD 획득", Toast.LENGTH_SHORT).show();
                         break;
                     case OPEN_BOX_EXP:
-                        Toast.makeText(tempContainer.getContext(), "100 EXP 획득", Toast.LENGTH_SHORT).show();
+                        getBenefit = OPEN_BOX_BASE_VALUE + Player.getPlayer().getAdditionValueByMultiply(MULTIPLY_TYPE_EXP,OPEN_BOX_BASE_VALUE);
+                        Toast.makeText(tempContainer.getContext(), getBenefit + " EXP 획득", Toast.LENGTH_SHORT).show();
                         break;
                     case OPEN_BOX_SEARCHVALUE:
-                        Toast.makeText(tempContainer.getContext(), "100 탐색도 획득", Toast.LENGTH_SHORT).show();
+                        getBenefit = OPEN_BOX_BASE_VALUE + Player.getPlayer().getAdditionValueByMultiply(MULTIPLY_TYPE_SEARCHVALUE,OPEN_BOX_BASE_VALUE);
+                        Toast.makeText(tempContainer.getContext(), getBenefit + " 탐색도 획득", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         Toast.makeText(tempContainer.getContext(), "열 수 있는 박스가 없습니다.", Toast.LENGTH_SHORT).show();

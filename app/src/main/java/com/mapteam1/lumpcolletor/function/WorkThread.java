@@ -60,7 +60,7 @@ public class WorkThread extends Thread {
                     oldSearchValue = MathUtils.lerp(oldSearchValue, cur, 0.2f);
                     message.what = UPDATE_SEARCHVALUE;
                     message.obj = cur + "/" + max;
-                    message.arg1 = (int) (oldSearchValue * 100) / max;
+                    message.arg1 = (int)oldSearchValue;
                     mHandler.sendMessage(message);
                 }
                 if (oldMoney != Player.getPlayer().getMoney()) {
@@ -75,6 +75,8 @@ public class WorkThread extends Thread {
                     Message message = mHandler.obtainMessage();
                     oldMaxSearchValue = Player.getPlayer().getMaxSearchValue();
                     message.what = UPDATE_MAX_SEARCH_VALUE;
+                    int cur = Player.getPlayer().getSearchValue();
+                    message.obj = cur + "/"+ oldMaxSearchValue;
                     message.arg1 = oldMaxSearchValue;
                     mHandler.sendMessage(message);
                 }
