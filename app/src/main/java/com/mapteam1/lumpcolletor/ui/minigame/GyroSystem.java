@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -35,7 +36,7 @@ public class GyroSystem {
     double targetX;
     double targetY;
 
-    int gyroSensitivity = 45;
+    int gyroSensitivity = 45 - SettingFragment.getSeekBarSound();
 
     int height;
     int width;
@@ -60,6 +61,7 @@ public class GyroSystem {
 
         targetX = getTargetX();
         targetY = getTargetY();
+
 
 
 
@@ -168,5 +170,4 @@ public class GyroSystem {
 
         return currY;
     }
-
 }
