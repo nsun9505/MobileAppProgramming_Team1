@@ -11,5 +11,8 @@
     <string name="name_upgrade_3">골드 획득량 증가</string>
     <string name="name_upgrade_4">경험치 획득량 증가</string>
     <string name="name_upgrade_5">최대 탐색도 증가</string>
+    <string name="name_loot_0">탐색도 100</string>
+    <string name="name_loot_1">골드 100</string>
+    <string name="name_loot_2">경험치 100</string>
 </resources>
 

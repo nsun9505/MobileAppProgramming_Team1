@@ -42,30 +42,15 @@ public class GyroSystem {
     private double dt;
 
     GameParent game;
-    int ran;
 
     public GyroSystem(final Activity a, final View root, final MinigameViewModel aa) {
         mySensorManager = (SensorManager) a.getSystemService(Context.SENSOR_SERVICE);
         myGyro = mySensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-        ran = (int)(Math.random()*3)+1;
-        if(ran == 1){
-            game = new gameFirst();
-        }
-        else if(ran == 2){
-            game = new gameSecond();
-        }
-        else{
-            game = new movePoint();
-        }
+        game = GameParent.RandomGame();
 
         targetX = getTargetX();
         targetY = getTargetY();
-
-
-
-        Log.d("ans", "X: "+targetX);
-        Log.d("ans", "Y: "+targetY);
 
 
         gyroListener = new SensorEventListener() {
@@ -99,17 +84,7 @@ public class GyroSystem {
                         Player.getPlayer().updateMoney();
                         Player.getPlayer().increaseSearchValue(10);
 
-                        ran = (int)(Math.random()*4)+1;
-                        Log.d("ranran","ran : "+ran);
-                        if(ran == 1){
-                            game = new gameFirst();
-                        }
-                        else if(ran == 3){
-                            game = new gameSecond();
-                        }
-                        else{
-                            game = new movePoint();
-                        }
+                        game = GameParent.RandomGame();
 
                         targetX = getTargetX();
                         targetY = getTargetY();

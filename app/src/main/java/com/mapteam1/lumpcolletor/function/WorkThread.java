@@ -37,9 +37,12 @@ public class WorkThread extends Thread {
             while(true) {
                 if (oldExp != Player.getPlayer().getCurrentExp()) {
                     Message message = mHandler.obtainMessage();
-                    oldExp = MathUtils.lerp(oldExp, Player.getPlayer().getCurrentExp(), 0.2f);
+                    int cur = Player.getPlayer().getCurrentExp();
+                    int max = Player.getPlayer().getMaxExp();
+                    oldExp = MathUtils.lerp(oldExp, cur, 0.2f);
                     message.what = UPDATE_EXP; // 메시지 ID
-                    message.arg1 = (int) (oldExp * 100) / Player.getPlayer().getMaxExp();
+                    message.obj = cur + "/" + max;
+                    message.arg1 = (int) (oldExp * 100) / max;
                     mHandler.sendMessage(message);
                 }
                 if (oldLevel != Player.getPlayer().getCurrentLevel()) {
@@ -52,9 +55,12 @@ public class WorkThread extends Thread {
                 }
                 if(oldSearchValue != Player.getPlayer().getSearchValue()) {
                     Message message = mHandler.obtainMessage();
-                    oldSearchValue = MathUtils.lerp(oldSearchValue, Player.getPlayer().getSearchValue(), 0.2f);
+                    int cur = Player.getPlayer().getSearchValue();
+                    int max = Player.getPlayer().getMaxSearchValue();
+                    oldSearchValue = MathUtils.lerp(oldSearchValue, cur, 0.2f);
                     message.what = UPDATE_SEARCHVALUE;
-                    message.arg1 = (int) (oldSearchValue * 100) / Player.getPlayer().getMaxSearchValue();
+                    message.obj = cur + "/" + max;
+                    message.arg1 = (int) (oldSearchValue * 100) / max;
                     mHandler.sendMessage(message);
                 }
                 if (oldMoney != Player.getPlayer().getMoney()) {
@@ -63,13 +69,6 @@ public class WorkThread extends Thread {
                     String money = String.valueOf(oldMoney);
                     message.what = UPDATE_MONEY;
                     message.obj = money;
-                    mHandler.sendMessage(message);
-                }
-                if(oldMaxSearchValue != Player.getPlayer().getMaxSearchValue()){
-                    Message message = mHandler.obtainMessage();
-                    oldMaxSearchValue = Player.getPlayer().getMaxSearchValue();
-                    message.what = UPDATE_MAX_SEARCH_VALUE;
-                    message.arg1 = oldMaxSearchValue;
                     mHandler.sendMessage(message);
                 }
                 if(oldNumberOfBox != Player.getPlayer().getNumOfBox()){

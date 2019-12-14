@@ -42,6 +42,13 @@
         android:layout_height="wrap_content"
         android:text="놓아주기"
         app:autoSizeTextType="uniform"/>
+
+    <Button
+        android:id="@+id/button_equip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="장착"
+        app:autoSizeTextType="uniform"/>
     </LinearLayout>
 
 </LinearLayout>

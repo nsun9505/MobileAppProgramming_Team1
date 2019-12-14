@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mapteam1.lumpcolletor.R;
 import com.mapteam1.lumpcolletor.function.Player;
+import com.mapteam1.lumpcolletor.lump.Lump;
 
 public class ShowLumpDetail extends Activity {
     @Override
@@ -18,7 +20,12 @@ public class ShowLumpDetail extends Activity {
 
         final int index = getIntent().getIntExtra("index", -1);
         ImageView charview = findViewById(R.id.char_view);
-        if (index >= 0) charview.setImageBitmap(Player.getPlayer().getLumpList().get(index).getBitmap());
+        TextView charinfo = findViewById(R.id.char_info);
+        if (index >= 0) {
+            Lump charLump = Player.getPlayer().getLumpList().get(index);
+            charview.setImageBitmap(charLump.getBitmap());
+            charinfo.setText(charLump.GetSkillDescription());
+        }
         Button button_close = findViewById(R.id.button_close); //설정버튼
         button_close.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {

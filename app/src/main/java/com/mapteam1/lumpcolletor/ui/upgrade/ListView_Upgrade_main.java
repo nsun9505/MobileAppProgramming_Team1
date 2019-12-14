@@ -89,14 +89,6 @@ public class ListView_Upgrade_main  extends Fragment {
                 R.drawable.ic_upgrade_5,null), upgradeItems.get(5).getuName(), upgradeItems.get(5).getuChanges(), String.valueOf(upgradeItems.get(5).getuCost()), 5);
         upgradeList.add(u6);
 
-        ListView_Upgrade u7 = new ListView_Upgrade(getResources().getDrawable(
-                R.drawable.ic_upgrade_,null), upgradeItems.get(6).getuName(), upgradeItems.get(6).getuChanges(), String.valueOf(upgradeItems.get(6).getuCost()), 6);
-        upgradeList.add(u7);
-
-        ListView_Upgrade u8 = new ListView_Upgrade(getResources().getDrawable(
-                R.drawable.ic_upgrade_,null), upgradeItems.get(7).getuName(), upgradeItems.get(7).getuChanges(), String.valueOf(upgradeItems.get(7).getuCost()), 7);
-        upgradeList.add(u8);
-
         View root1 = inflater.inflate(R.layout.fragment_upgrade, container, false);
         ListView_Adapter adapter = new ListView_Adapter(getActivity().getApplicationContext(), upgradeList, this);
 

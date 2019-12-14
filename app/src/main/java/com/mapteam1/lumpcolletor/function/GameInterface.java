@@ -36,4 +36,5 @@ public interface GameInterface {
      int getMoney();
      int getMaxSearchValue();
      int getMaxExp();
+     int getNumOfBox();
 }

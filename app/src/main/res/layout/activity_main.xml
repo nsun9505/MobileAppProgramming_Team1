@@ -42,78 +42,86 @@
         app:layout_constraintBottom_toTopOf="@+id/resource_bar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/exp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintLeft_toRightOf="@+id/exp"/>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/exp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="경험치"
-        android:textSize="15dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView3"
-        app:layout_constraintRight_toLeftOf="@id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="8dp"
         app:layout_constraintBottom_toTopOf="@+id/search"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="탐색도"
-        android:textSize="15dp"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toRightOf="@+id/textView3"
-        app:layout_constraintRight_toLeftOf="@id/progressBar2"
+        app:layout_constraintRight_toLeftOf="@id/settingbtn"
+        app:layout_constraintTop_toTopOf="@+id/textView3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경험치"
+            android:textSize="15dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="20"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"/>
+
+        <TextView
+            android:id="@+id/exp_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100/100"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView3"
+        app:layout_constraintRight_toLeftOf="@id/settingbtn"
         app:layout_constraintBottom_toBottomOf="@id/textView3"
-        app:layout_constraintTop_toBottomOf="@id/exp"
-        tools:ignore="MissingConstraints" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="20"
-
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/exp"
-        app:layout_constraintTop_toTopOf="@+id/exp"
-        app:layout_constraintBottom_toBottomOf="@+id/exp"
-        app:layout_constraintRight_toLeftOf="@+id/settingbtn"
-        tools:ignore="MissingConstraints" />
-
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="10"
-
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/search"
-        app:layout_constraintTop_toTopOf="@id/search"
-        app:layout_constraintBottom_toBottomOf="@+id/search"
-        app:layout_constraintRight_toLeftOf="@+id/settingbtn"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@id/exp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="탐색도"
+            android:textSize="15dp"/>
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="10"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"/>
+        <TextView
+            android:id="@+id/search_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100/100"
+            android:textSize="15dp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/settingbtn"
         android:layout_width="50dp"
         android:layout_height="0dp"
-        android:layout_marginRight="8dp"
         android:foreground="@drawable/ic_option"
         android:foregroundTint="#000000"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@id/textView3"
-        app:layout_constraintLeft_toRightOf="@+id/progressBar2"
+        app:layout_constraintLeft_toRightOf="@+id/exp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textView3"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="@id/textView3" />
 
     <LinearLayout
         android:id="@+id/resource_bar"

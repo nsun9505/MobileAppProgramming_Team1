@@ -31,13 +31,14 @@ public class LootBoxFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_lootbox, container, false);
 
         int img[] = {
-                R.drawable.ic_upgrade_0,
-                R.drawable.ic_upgrade_1,
                 R.drawable.ic_upgrade_2,
                 R.drawable.ic_upgrade_3,
-                R.drawable.ic_upgrade_4,
-                R.drawable.ic_upgrade_5,
-                R.drawable.ic_upgrade_};
+                R.drawable.ic_upgrade_4};
+
+        final int desc[] = {
+                R.string.name_loot_0,
+                R.string.name_loot_1,
+                R.string.name_loot_2};
 
         MyAdapter adapter = new MyAdapter (
                 getActivity().getApplicationContext(),
@@ -53,7 +54,7 @@ public class LootBoxFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                textView.setText("position : " + position);
+                textView.setText(desc[position]);
             }
         });
 

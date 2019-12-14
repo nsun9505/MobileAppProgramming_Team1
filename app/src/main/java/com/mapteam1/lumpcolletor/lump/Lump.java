@@ -3,16 +3,29 @@ package com.mapteam1.lumpcolletor.lump;
 import android.graphics.Bitmap;
 
 public class Lump {
+    private final static String REGEX = "_";
     LumpBlueprint lbp;
     Bitmap imgCache;
+    LumpSkill skill;
 
     public Lump(LumpBlueprint lbp) {
         this.lbp = lbp;
+        skill = LumpSkill.FullRandom();
     }
 
     public Lump(String data) {
         lbp = new LumpBlueprint();
-        lbp.Decode(data);
+        String[] info = data.split(REGEX);
+        if (info.length > 3) {
+            lbp.Decode(info[0]);
+            int type = Integer.parseInt(info[1]);
+            int chance = Integer.parseInt(info[2]);
+            int effect = Integer.parseInt(info[3]);
+            skill = new LumpSkill(type, chance, effect);
+        } else {
+            lbp.Decode(data);
+            skill = LumpSkill.FullRandom();
+        }
     }
 
     public Bitmap getBitmap() {
@@ -22,9 +35,22 @@ public class Lump {
         return imgCache;
     }
 
-
     public String Encode() {
         if (lbp == null) return null;
-        return lbp.Encode();
+        String data = lbp.Encode();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(data);
+        stringBuilder.append(REGEX);
+        stringBuilder.append(skill.type);
+        stringBuilder.append(REGEX);
+        stringBuilder.append(skill.chance);
+        stringBuilder.append(REGEX);
+        stringBuilder.append(skill.effect);
+
+        return stringBuilder.toString();
+    }
+
+    public String GetSkillDescription() {
+        return skill.description();
     }
 }

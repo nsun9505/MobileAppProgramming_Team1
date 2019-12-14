@@ -1,28 +1,17 @@
-package com.mapteam1.lumpcolletor.ui.minigame;
-
-import android.content.Context;
+package com.mapteam1.lumpcolletor.gameskin;
 
 import android.graphics.Bitmap;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
-
-import com.mapteam1.lumpcolletor.R;
-import com.mapteam1.lumpcolletor.gameskin.GameParent;
-
-public class movePoint extends GameParent {
+public class gameSecond extends GameParent {
     protected Bitmap GameScreen;
     protected int width;
     protected int height;
 
-    public movePoint() {
+    public gameSecond() {
         width = 320;
         height = 320;
         GameScreen = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -39,7 +28,7 @@ public class movePoint extends GameParent {
         Log.d("135135", "X: "+xpos+"  Y:"+ypos);
         paint.setColor(Color.WHITE);
         canvas.drawRect(0, 0, width, height, paint);
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.BLUE);
         canvas.drawCircle(xpos*width, ypos*height, 30f, paint);
         canvas.drawCircle(xtarget*width, ytarget*height, 20f, paint);
     }

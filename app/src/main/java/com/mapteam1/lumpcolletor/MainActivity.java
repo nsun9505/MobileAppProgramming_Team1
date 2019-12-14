@@ -91,46 +91,50 @@ public class MainActivity extends AppCompatActivity {
         saveData = new SaveData(this);
         Player.getPlayer().Load(saveData);
 
-        TextView levelText = (TextView)findViewById(R.id.textView3);
+        final TextView levelText = (TextView)findViewById(R.id.textView3);
         levelText.setText(String.valueOf(Ginterface.getCurrentLevel() +" LV"));
 
-        ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
-        expProgress.setProgress(Ginterface.getCurrentExp());
+        int cur, max;
+        cur = Ginterface.getCurrentExp();
+        max = Ginterface.getMaxExp();
+        final TextView expText = (TextView)findViewById(R.id.exp_value);
+        expText.setText(String.format("%d/%d", cur, max));
+        final ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
+        expProgress.setProgress((cur * 100)/max);
 
-        ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
-        searchProgress.setProgress(Ginterface.getSearchValue());
+        cur = Ginterface.getSearchValue();
+        max = Ginterface.getMaxSearchValue();
+        final TextView searchText = (TextView)findViewById(R.id.search_value);
+        searchText.setText(String.format("%d/%d", cur, max));
+        final ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
+        searchProgress.setProgress((cur * 100)/max);
 
-        TextView moneyText = (TextView)findViewById(R.id.textView4);
+        final TextView moneyText = (TextView)findViewById(R.id.textView4);
         moneyText.setText(String.valueOf(Ginterface.getMoney()));
+
+        final TextView boxText = (TextView)findViewById(R.id.textView5);
+        boxText.setText(String.valueOf(Ginterface.getNumOfBox()));
 
         Handler handler = new Handler(){
           @Override
           public void handleMessage(Message msg){
             switch(msg.what){
-                case WorkThread.UPDATE_EXP:
-                    ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
-                    expProgress.setProgress(msg.arg1);
-                    break;
                 case WorkThread.UPDATE_LEVEL:
-                    TextView levelText = (TextView)findViewById(R.id.textView3);
                     levelText.setText(msg.obj.toString());
                     break;
                 case WorkThread.UPDATE_MONEY:
-                    TextView moneyText = (TextView)findViewById(R.id.textView4);
                     moneyText.setText(msg.obj.toString());
                     break;
-                case WorkThread.UPDATE_SEARCHVALUE:
-                    ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
-                    searchProgress.setProgress(msg.arg1);
+                case WorkThread.UPDATE_EXP:
+                    expProgress.setProgress(msg.arg1);
+                    expText.setText(msg.obj.toString());
                     break;
-                case WorkThread.UPDATE_MAX_SEARCH_VALUE:
-                    ProgressBar maxSearchValue = (ProgressBar)findViewById(R.id.progressBar2);
-                    maxSearchValue.setMax(msg.arg1);
-                    maxSearchValue.setProgress(Player.getPlayer().getSearchValue());
+                case WorkThread.UPDATE_SEARCHVALUE:
+                    searchProgress.setProgress(msg.arg1);
+                    searchText.setText(msg.obj.toString());
                     break;
                 case WorkThread.UPDATE_NUM_OF_BOX:
-                    TextView box = (TextView)findViewById(R.id.textView5);
-                    box.setText(msg.obj.toString());
+                    boxText.setText(msg.obj.toString());
             }
           }
         };

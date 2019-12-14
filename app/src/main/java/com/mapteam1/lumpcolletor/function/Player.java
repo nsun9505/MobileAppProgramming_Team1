@@ -52,7 +52,7 @@ public class Player implements GameInterface {
         this.level = 1;
         this.currentExp = 0;
         this.searchValue = 0;
-        this.money = 0;
+        this.money = 1000;
         this.numOfBox = 0;
         this.maxExp = 100;
         this.maxSearchValue = 100;
@@ -101,6 +101,10 @@ public class Player implements GameInterface {
 
     public void UpdateMaxExp() {
         this.setMaxExp(100 + (this.getCurrentLevel() - 1) * 20);
+    }
+
+    public void UpdateMaxSearchValue() {
+        maxSearchValue = (int) (100 * (upgradeList.get(5).applyEffect() + 1));
     }
 
     // 1차 보상 : 탐색도 증가
@@ -230,7 +234,6 @@ public class Player implements GameInterface {
     }
 
     public int getMaxSearchValue() {
-        maxSearchValue = (int) (100 * (upgradeList.get(5).applyEffect() + 1));
         return this.maxSearchValue;
     }
 
@@ -288,13 +291,17 @@ public class Player implements GameInterface {
         searchValue = saveData.searchprog;
         money = saveData.gold;
         numOfBox = saveData.boxes;
-        maxExp = getMaxExp();
-        maxSearchValue = getMaxSearchValue();
+
         saveData.translateLumpsStringSet(lumpList);
         int[] upgradePoints = saveData.translateUpgradesString();
         for(int i = 0; i < upgradePoints.length; i++) {
             upgradeList.get(i).setuPoint(upgradePoints[i]);
         }
+
+        UpdateMaxExp();
+        UpdateMaxSearchValue();
+        maxExp = getMaxExp();
+        maxSearchValue = getMaxSearchValue();
     }
 
     public void Save(SaveData saveData) {

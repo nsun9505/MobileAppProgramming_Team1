@@ -15,6 +15,8 @@ import android.graphics.Paint;
 import com.mapteam1.lumpcolletor.lump.LumpGenerator;
 import com.mapteam1.lumpcolletor.lump.PartsData;
 
+import java.util.Random;
+
 
 public class GameParent{
     protected Bitmap GameScreen;
@@ -39,6 +41,23 @@ public class GameParent{
 
         canvas.drawCircle(xpos + halfwidth, ypos+halfheight, 30f, paint);
         canvas.drawCircle(xtarget + halfwidth, ytarget+halfheight, 20f, paint);
+    }
+
+    public static GameParent RandomGame() {
+        GameParent randomgame;
+        int randomindex = new Random().nextInt(2);
+        switch(randomindex) {
+            case 0:
+                randomgame = new movePoint();
+                break;
+            case 1:
+                randomgame = new gameSecond();
+                break;
+            default:
+                randomgame = new GameParent();
+                break;
+        }
+        return randomgame;
     }
 }
 

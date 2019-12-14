@@ -51,7 +51,7 @@ public class LootLumpFragment extends Fragment {
             public void onClick(View v) {
                 boolean ret = Player.getPlayer().getParts(LOOT_LUMP_COST);
                 if(ret == false){
-                    textView.setText("탐색도가 부족합니다.");
+                    Toast.makeText(container.getContext(), "탐색도가 부족합니다.", Toast.LENGTH_LONG).show();
                 }else {
                     lootLumpViewModel.createLump();
                     button.setText(String.format("덩어리 뽑기(%d/%d)", Player.getPlayer().getSearchValue(), LOOT_LUMP_COST));
