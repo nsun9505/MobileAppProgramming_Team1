@@ -12,43 +12,35 @@
         android:id="@+id/char_view"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/char_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:text="상세정보"
-        app:autoSizeTextType="uniform"/>
+        android:text="스킬정보텍스트"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/button_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="닫기"
-        app:autoSizeTextType="uniform"/>
+        <Button
+            android:id="@+id/button_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/s_close"/>
 
-    <Button
-        android:id="@+id/button_release"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="놓아주기"
-        app:autoSizeTextType="uniform"/>
-
-    <Button
-        android:id="@+id/button_equip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="장착"
-        app:autoSizeTextType="uniform"/>
+        <Button
+            android:id="@+id/button_release"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="놓아주기(버리기)"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_toggle_active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="스킬 활성화 토글(현재/전체)"/>
 
 </LinearLayout>

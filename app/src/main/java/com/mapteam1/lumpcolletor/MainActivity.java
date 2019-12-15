@@ -5,13 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.view.Window;
-import android.view.WindowManager;
 
-import com.mapteam1.lumpcolletor.function.GameInterface;
 import com.mapteam1.lumpcolletor.function.Player;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mapteam1.lumpcolletor.function.SaveData;
@@ -28,11 +24,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn;
     private Thread updateThread;
     private View decorView;
     private int uiOption;
-    private GameInterface Ginterface = null;
     private SaveData saveData = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         settingbtn.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) { //클릭이벤트
-                Intent myintent = new Intent(MainActivity.this, SettingFragment.class);
+                Intent myintent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(myintent);
             }
         });
@@ -87,34 +81,34 @@ public class MainActivity extends AppCompatActivity {
     } //전체화면끝
 
     public void initGameInfo(){
-        this.Ginterface = Player.getPlayer();
+        Player player = Player.getPlayer();
         saveData = new SaveData(this);
-        Player.getPlayer().Load(saveData);
+        player.Load(saveData);
+
 
         final TextView levelText = (TextView)findViewById(R.id.textView3);
-        levelText.setText(String.valueOf(Ginterface.getCurrentLevel() +" LV"));
+        levelText.setText(String.valueOf(player.getCurrentLevel() +" LV"));
 
         int cur, max;
-        cur = Ginterface.getCurrentExp();
-        max = Ginterface.getMaxExp();
+        cur = player.getCurrentExp();
+        max = player.getMaxExp();
         final TextView expText = (TextView)findViewById(R.id.exp_value);
         expText.setText(String.format("%d/%d", cur, max));
         final ProgressBar expProgress = (ProgressBar)findViewById(R.id.progressBar);
         expProgress.setProgress((cur * 100)/max);
-        expProgress.setMax(max);
 
-        cur = Ginterface.getSearchValue();
-        max = Ginterface.getMaxSearchValue();
+        cur = player.getSearchValue();
+        max = player.getMaxSearchValue();
         final TextView searchText = (TextView)findViewById(R.id.search_value);
         searchText.setText(String.format("%d/%d", cur, max));
         final ProgressBar searchProgress = (ProgressBar)findViewById(R.id.progressBar2);
         searchProgress.setProgress((cur * 100)/max);
 
         final TextView moneyText = (TextView)findViewById(R.id.textView4);
-        moneyText.setText(String.valueOf(Ginterface.getMoney()));
+        moneyText.setText(String.valueOf(player.getMoney()));
 
         final TextView boxText = (TextView)findViewById(R.id.textView5);
-        boxText.setText(String.valueOf(Ginterface.getNumOfBox()));
+        boxText.setText(String.valueOf(player.getNumOfBox()));
 
         Handler handler = new Handler(){
           @Override
@@ -135,9 +129,8 @@ public class MainActivity extends AppCompatActivity {
                     searchText.setText(msg.obj.toString());
                     break;
                 case WorkThread.UPDATE_MAX_SEARCH_VALUE:
-                    searchText.setText(msg.obj.toString());
-                    searchProgress.setMax(Player.getPlayer().getMaxSearchValue());
                     searchProgress.setProgress(Player.getPlayer().getSearchValue());
+                    searchText.setText(msg.obj.toString());
                     break;
                 case WorkThread.UPDATE_NUM_OF_BOX:
                     boxText.setText(msg.obj.toString());
@@ -147,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
 
         updateThread = new WorkThread(handler);
         updateThread.start();
+
+        SettingActivity.LoadGameSetting(this);
     }
 
     @Override

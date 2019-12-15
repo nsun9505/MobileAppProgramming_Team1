@@ -3,19 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
-
-    <!--
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="초기화"
-            android:id="@+id/btn1"/>
-    -->
 
 
     <ImageView
-        android:id="@+id/MinigameImage"
+        android:id="@+id/iv_minigame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srcCompat="@drawable/ic_minigame" />

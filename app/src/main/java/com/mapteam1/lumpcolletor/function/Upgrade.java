@@ -6,6 +6,13 @@ public class Upgrade {
     private int uCost;
     private int uPoint;
 
+    public Upgrade(String name){
+        this.uName = name;
+        this.uChanges = "0% -> 5%";
+        this.uCost = 100;
+        this.uPoint = 0;
+    }
+
     public Upgrade(String name, String changes, int cost, int point){
         this.uName = name;
         this.uChanges = changes;
@@ -19,7 +26,7 @@ public class Upgrade {
     }
     public void updateinfo() {
         uCost = (1 + uPoint) * 100;
-        uChanges = (uPoint * 5) + "% -> " + ((uPoint+1)*5)+"%";
+        uChanges = String.format("%d%% -> %d%%", uPoint * 5, ((uPoint+1)*5));
     }
 
     public int applyEffect(int origin){

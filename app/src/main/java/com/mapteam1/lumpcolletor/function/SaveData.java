@@ -29,9 +29,9 @@ public class SaveData {
         if(sharedPreferences!=null){
             level = sharedPreferences.getInt("level",1);
             exp = sharedPreferences.getInt("exp",0);
-            searchprog = sharedPreferences.getInt("sp",0);
-            gold = sharedPreferences.getInt("gold",0);
-            boxes = sharedPreferences.getInt("boxes",0);
+            searchprog = sharedPreferences.getInt("sp",50);
+            gold = sharedPreferences.getInt("gold",100);
+            boxes = sharedPreferences.getInt("boxes",1);
             lumps = sharedPreferences.getStringSet("lumps", null);
             upgrades = sharedPreferences.getString("upgrades","00000000");
             _test_tostring();

@@ -1,35 +1,26 @@
 package com.mapteam1.lumpcolletor.ui.upgrade;
 
 import android.content.Context;
-import android.database.DataSetObservable;
-import android.database.DataSetObserver;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.fragment.app.FragmentTransaction;
 
 import com.mapteam1.lumpcolletor.R;
 import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.function.Upgrade;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ListView_Adapter extends ArrayAdapter<ListView_Upgrade> implements View.OnClickListener {
     // Activity에서 가져온 객체정보를 저장할 변수
     private ListView_Upgrade mUser;
     private Context mContext;
-    private ListView_Upgrade_main fragment;
+    private UpgradeFragment fragment;
 
     // ListView 내부 View들을 가르킬 변수들
     private ImageView UpgradeIcon;
@@ -40,34 +31,11 @@ public class ListView_Adapter extends ArrayAdapter<ListView_Upgrade> implements 
     // 리스트 아이템 데이터를 저장할 배열
     private ArrayList<ListView_Upgrade> mUserData = new ArrayList<ListView_Upgrade>();
 
-    public ListView_Adapter(Context context, ArrayList<ListView_Upgrade> upgrades, ListView_Upgrade_main fragment) {
+    public ListView_Adapter(Context context, ArrayList<ListView_Upgrade> upgrades, UpgradeFragment fragment) {
         super(context, 0, upgrades);
         mContext = context;
         mUserData = upgrades;
         this.fragment = fragment;
-    }
-
-    public ArrayList<ListView_Upgrade> getList(){
-        return this.mUserData;
-    }
-
-    //@Override
-    /**
-     * @return 아이템의 총 개수를 반환
-     */
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return mUserData.size();
-    }
-
-
-    //@Override
-    /**
-     * @return 선택된 아이템을 반환
-     */
-    public ListView_Upgrade getItem(int position) {
-        // TODO Auto-generated method stub
-        return mUserData.get(position);
     }
 
     @Override
@@ -81,14 +49,6 @@ public class ListView_Adapter extends ArrayAdapter<ListView_Upgrade> implements 
     }
 
     @Override
-    /**
-     * getView
-     *
-     * @param position - 현재 몇 번째로 아이템이 추가되고 있는지 정보를 갖고 있다.
-     * @param convertView - 현재 사용되고 있는 어떤 레이아웃을 가지고 있는지 정보를 갖고 있다.
-     * @param parent - 현재 뷰의 부모를 지칭하지만 특별히 사용되지는 않는다.
-     * @return 리스트 아이템이 저장된 convertView
-     */
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View v = convertView;

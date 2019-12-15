@@ -2,24 +2,14 @@ package com.mapteam1.lumpcolletor.ui.minigame;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-
-import com.mapteam1.lumpcolletor.R;
-import com.mapteam1.lumpcolletor.SettingFragment;
+import com.mapteam1.lumpcolletor.SettingActivity;
 import com.mapteam1.lumpcolletor.function.Player;
 import com.mapteam1.lumpcolletor.gameskin.GameParent;
 
@@ -36,7 +26,7 @@ public class GyroSystem {
     double targetX;
     double targetY;
 
-    int gyroSensitivity = 45 - SettingFragment.getSeekBarSound();
+    int gyroSensitivity = 45 - SettingActivity.getSensitivity();
 
     int height;
     int width;
@@ -48,29 +38,22 @@ public class GyroSystem {
     private double timestamp = 0.0;
     private double dt;
 
-
-
     GameParent game;
 
     public GyroSystem(final Activity a, final View root, final MinigameViewModel aa) {
         mySensorManager = (SensorManager) a.getSystemService(Context.SENSOR_SERVICE);
         myGyro = mySensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-
         game = GameParent.RandomGame();
 
         targetX = getTargetX();
         targetY = getTargetY();
-
-
-
 
         gyroListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 double gyroY = event.values[0];
                 double gyroX = event.values[1];
-
 
                 dt = (event.timestamp - timestamp) * NS2S;
                 timestamp = event.timestamp;
@@ -79,15 +62,11 @@ public class GyroSystem {
                 width = root.getWidth();
 
                 game.Update((float)currX,(float)currY,(float)targetX,(float)targetY);
-                gyroSensitivity = 45 - SettingFragment.getSeekBarSound();
+                gyroSensitivity = 45 - SettingActivity.getSensitivity();
 
                 if (dt - timestamp * NS2S != 0) {
-
-
                     currX = getCurrX(gyroX,dt,width);
                     currY = getCurrY(gyroY,dt,height);
-
-
 
                     if(Math.sqrt(Math.pow(currX-targetX,2)+Math.pow(currY-targetY,2))<0.05){
                         Toast.makeText(a,"CLEAR!!",Toast.LENGTH_SHORT).show();
@@ -100,16 +79,10 @@ public class GyroSystem {
 
                         targetX = getTargetX();
                         targetY = getTargetY();
-
                     }
-
-                    Log.d("xyxy", "X: "+currX+"  Y:"+currY);
-
                     game.Update((float)currX,(float)currY,(float)targetX,(float)targetY);
                     aa.setBitmap(game.GetBitmap());
-
                 }
-
             }
 
             @Override
@@ -169,5 +142,10 @@ public class GyroSystem {
         currY = (currY+gyroSensitivity)/(gyroSensitivity*2);
 
         return currY;
+    }
+
+    public void resetPos() {
+        roll = 0;
+        pitch = 0;
     }
 }

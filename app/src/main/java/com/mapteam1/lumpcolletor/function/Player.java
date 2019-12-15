@@ -1,17 +1,10 @@
 package com.mapteam1.lumpcolletor.function;
 
-
-import android.widget.TextView;
-
-import com.mapteam1.lumpcolletor.R;
 import com.mapteam1.lumpcolletor.lump.Lump;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Random;
 
-public class Player implements GameInterface {
+public class Player {
     private static final int LEVELUP = 1;
     private static final int NOLEVELUP = 0;
     private static final int MAXSEARCHVALUE = 1;
@@ -54,19 +47,19 @@ public class Player implements GameInterface {
         this.currentExp = 0;
         this.searchValue = 0;
         this.money = 0;
-        this.numOfBox = 100;
+        this.numOfBox = 0;
         this.maxExp = 100;
         this.maxSearchValue = 100;
         this.decoList = new ArrayList<Decoration>();
         this.upgradeList = new ArrayList<Upgrade>();
-        upgradeList.add(0, new Upgrade("스킬 발동 확률 증가", "0% -> 5%", 100, 0));
-        upgradeList.add(1, new Upgrade("스킬 발동 효과 증가", "0% -> 5%", 100, 0));
-        upgradeList.add(2, new Upgrade("탐색도 획득량 증가", "0% -> 5%", 100, 0));
-        upgradeList.add(3, new Upgrade("골드 획득량 증가", "0% -> 5%", 100, 0));
-        upgradeList.add(4, new Upgrade("경험치 획득량 증가", "0% -> 5%", 100, 0));
-        upgradeList.add(5, new Upgrade("최대 탐색도 증가", "0% -> 5%", 100, 0));
-        upgradeList.add(6, new Upgrade("10초당 경험치 획득", "0% -> 5%", 100, 0));
-        upgradeList.add(7, new Upgrade("10초당 탐색도 획득", "0% -> 5%", 100, 0));
+        upgradeList.add(0, new Upgrade("스킬 발동 확률 증가"));
+        upgradeList.add(1, new Upgrade("스킬 발동 효과 증가"));
+        upgradeList.add(2, new Upgrade("탐색도 획득량 증가"));
+        upgradeList.add(3, new Upgrade("골드 획득량 증가"));
+        upgradeList.add(4, new Upgrade("경험치 획득량 증가"));
+        upgradeList.add(5, new Upgrade("최대 탐색도 증가"));
+        upgradeList.add(6, new Upgrade("10초당 경험치 획득"));
+        upgradeList.add(7, new Upgrade("10초당 탐색도 획득"));
         this.lumpList = new ArrayList<>();
     }
 
@@ -236,9 +229,7 @@ public class Player implements GameInterface {
         return this.numOfBox;
     }
 
-    public int getMaxSearchValue() {
-        return this.maxSearchValue;
-    }
+    public int getMaxSearchValue() { return this.maxSearchValue; }
 
     public int getMaxExp() {
         return this.maxExp;

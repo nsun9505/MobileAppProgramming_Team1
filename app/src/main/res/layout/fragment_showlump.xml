@@ -6,24 +6,23 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/text_showcharacter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="CharacterList"
+        android:text="@string/s_showlump"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/grid1"
+    <GridView
+        android:id="@+id/gv_showlump"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="2dip"
-        android:verticalSpacing="4dip"
-        android:horizontalSpacing="4dip"
+        android:padding="2dp"
+        android:verticalSpacing="4dp"
+        android:horizontalSpacing="4dp"
         android:numColumns="auto_fit"
-        android:columnWidth="72dip"
+        android:columnWidth="72dp"
         android:stretchMode="columnWidth"
         android:gravity="center"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

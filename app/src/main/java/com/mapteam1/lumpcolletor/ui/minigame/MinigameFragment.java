@@ -33,7 +33,7 @@ public class MinigameFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_minigame, container, false);
 
 
-        final ImageView imageview = root.findViewById(R.id.MinigameImage);
+        final ImageView imageview = root.findViewById(R.id.iv_minigame);
 
 
         gs = new GyroSystem(getActivity(),root,minigameViewModel);
@@ -42,7 +42,7 @@ public class MinigameFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN)
-                    refresh();
+                    gs.resetPos();
 
                 return true;
             }
@@ -73,12 +73,6 @@ public class MinigameFragment extends Fragment {
     }
     public void onStop() {
         super.onStop();
-    }
-
-
-    public void refresh(){
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
     }
 
 }

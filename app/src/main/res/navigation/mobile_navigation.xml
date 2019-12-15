@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_open_itembox">
+    app:startDestination="@+id/navigation_gamestart">
 
     <fragment
         android:id="@+id/navigation_gamestart"
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_upgrade"
-        android:name="com.mapteam1.lumpcolletor.ui.upgrade.ListView_Upgrade_main"
+        android:name="com.mapteam1.lumpcolletor.ui.upgrade.UpgradeFragment"
         android:label="@string/title_upgrade"
         tools:layout="@layout/fragment_upgrade" />
 
