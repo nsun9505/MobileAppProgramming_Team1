@@ -3,10 +3,8 @@ package com.mapteam1.lumpcolletor.gameskin;
 import android.graphics.Bitmap;
 
 import android.graphics.BitmapShader;
-import android.graphics.BlendMode;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.graphics.Shader;
@@ -14,12 +12,7 @@ import android.graphics.Shader;
 public class gHighlight extends GameParent {
     private Bitmap bg;
 
-    public gHighlight() {
-        super();
-    }
-
     private void createBg(float xtarget, float ytarget) {
-
         bg = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bg);
         Paint paint = new Paint();
@@ -37,9 +30,7 @@ public class gHighlight extends GameParent {
     @Override
     public void Update(float xpos, float ypos, float xtarget, float ytarget) {
         Canvas canvas = new Canvas(GameScreen);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         canvas.drawColor(Color.BLACK);
 
         paint.setColor(Color.WHITE);

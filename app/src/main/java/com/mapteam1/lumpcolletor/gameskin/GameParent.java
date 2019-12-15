@@ -3,6 +3,7 @@ package com.mapteam1.lumpcolletor.gameskin;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.Random;
@@ -24,7 +25,8 @@ public class GameParent{
 
     public void Update(float xpos, float ypos, float xtarget, float ytarget) {
         Canvas canvas = new Canvas(GameScreen);
-        Paint paint = new Paint();
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        canvas.drawColor(Color.WHITE);
 
         float halfwidth = width + 0.5f;
         float halfheight = height + 0.5f;
@@ -35,7 +37,7 @@ public class GameParent{
 
     public static GameParent RandomGame() {
         GameParent randomgame;
-        int randomindex = new Random().nextInt(3);
+        int randomindex = new Random().nextInt(4);
         switch(randomindex) {
             case 0:
                 randomgame = new gDowsing();
@@ -45,6 +47,9 @@ public class GameParent{
                 break;
             case 2:
                 randomgame = new gShapeSync();
+                break;
+            case 3:
+                randomgame = new gWaveSync();
                 break;
             default:
                 randomgame = new GameParent();

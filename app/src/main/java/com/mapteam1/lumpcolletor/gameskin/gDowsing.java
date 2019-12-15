@@ -13,21 +13,13 @@ public class gDowsing extends GameParent {
     long now = 0;
     long last = 0;
 
-    public gDowsing() {
-        super();
-    }
-
-    public Bitmap GetBitmap() {
-        return GameScreen;
-    }
-
+    @Override
     public void Update(float xpos, float ypos, float xtarget, float ytarget) {
         Canvas canvas = new Canvas(GameScreen);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        canvas.drawColor(Color.WHITE);
 
         float length = MathUtils.dist(xpos, ypos, xtarget, ytarget) * width;
-        canvas.drawColor(Color.WHITE);
 
         BlurMaskFilter filter = new BlurMaskFilter(10, BlurMaskFilter.Blur.OUTER);
         paint.setColor(Color.MAGENTA);
