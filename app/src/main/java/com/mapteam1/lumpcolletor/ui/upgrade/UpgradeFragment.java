@@ -38,11 +38,15 @@ public class UpgradeFragment extends Fragment {
                 R.drawable.ic_upgrade_2,
                 R.drawable.ic_upgrade_3,
                 R.drawable.ic_upgrade_4,
-                R.drawable.ic_upgrade_5 };
+                R.drawable.ic_upgrade_5,
+                R.drawable.ic_upgrade_ ,
+                R.drawable.ic_upgrade_ ,
+                R.drawable.ic_upgrade_ ,
+                R.drawable.ic_upgrade_ };
 
         Upgrade upgrade;
         ListView_Upgrade upgradeStructure;
-        for(int i = 0; i < img.length; i++) {
+        for(int i = 0; i < upgradeItems.size(); i++) {
             upgrade = upgradeItems.get(i);
             upgradeStructure = new ListView_Upgrade(getResources().getDrawable(img[i], null), upgrade.getuName(), upgrade.getuChanges(), String.valueOf(upgrade.getuCost()), i);
             upgradeList.add(upgradeStructure);

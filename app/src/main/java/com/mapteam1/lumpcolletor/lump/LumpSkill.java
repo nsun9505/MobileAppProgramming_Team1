@@ -1,7 +1,5 @@
 package com.mapteam1.lumpcolletor.lump;
 
-import androidx.core.math.MathUtils;
-
 import com.mapteam1.lumpcolletor.function.Player;
 
 import java.util.Random;
@@ -17,15 +15,17 @@ public class LumpSkill {
         this.effect = effect;
     }
 
-    public int activateAddition(int matchType, int value) {
-        if (matchType == type && new Random().nextInt(100) <= chance)
-            return value * effect / 100;
+    public int activateAddition(int matchType, int value, double bonusChance, double bonueEffect) {
+        double finalChance = chance * (1+bonusChance/100);
+        double finalEffect = effect * (1+bonueEffect/100);
+        if (matchType == type && new Random().nextInt(100) <= finalChance)
+            return (int)(value * finalEffect / 100);
         return 0;
     }
 
     public static LumpSkill Random(int power) {
         Random r = new Random();
-        int type = r.nextInt(3);
+        int type = 2 + r.nextInt(3);
         int chance = Math.max(r.nextInt(Math.min(100, power)), 1);
         int effect = Math.max(1, power - chance);
 
@@ -38,18 +38,26 @@ public class LumpSkill {
     }
 
     public String description() {
-        String target = "%d%% 확률로 기분 %d%% 증가";
+        String target;
         switch(type) {
-            case 0:
-                target = "%d%% 확률로 경험치 %d%% 추가 획득";
-                break;
-            case 1:
-                target = "%d%% 확률로 탐색도 %d%% 추가 획득";
-                break;
             case 2:
-                target = "%d%% 확률로 골드 %d%% 추가 획득";
+                target = "%s%% 확률로 탐색도 %s%% 추가 획득";
+                break;
+            case 3:
+                target = "%s%% 확률로 골드 %s%% 추가 획득";
+                break;
+            case 4:
+                target = "%s%% 확률로 경험치 %s%% 추가 획득";
+                break;
+            default:
+                target = "%s%% 확률로 기분 %s%% 증가";
                 break;
         }
-        return String.format(target, chance, effect);
+        String strBonus = "%d(+%d)";
+        int finalChance = Player.getPlayer().getAdditionValueByMultiply(0, chance);
+        int finalEffect = Player.getPlayer().getAdditionValueByMultiply(1, effect);
+        String strChance = (finalChance > 0)?String.format(strBonus, chance+finalChance, finalChance):String.valueOf(chance);
+        String strEffect = (finalEffect > 0)?String.format(strBonus, effect+finalEffect, finalEffect):String.valueOf(effect);
+        return String.format("활성화 시: "+target, strChance, strEffect);
     }
 }

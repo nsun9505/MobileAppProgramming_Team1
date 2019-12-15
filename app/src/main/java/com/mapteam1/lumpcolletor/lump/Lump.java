@@ -53,4 +53,8 @@ public class Lump {
     public String GetSkillDescription() {
         return skill.description();
     }
+
+    public int getSkillEffect(int matchType, int value, double bonusChance, double bonueEffect) {
+        return skill.activateAddition(matchType, value, bonusChance, bonueEffect);
+    }
 }

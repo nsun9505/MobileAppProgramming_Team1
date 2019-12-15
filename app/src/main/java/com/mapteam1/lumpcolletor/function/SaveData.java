@@ -23,6 +23,7 @@ public class SaveData {
     int boxes;
     Set<String> lumps;
     String upgrades;
+    Set<String> activelumps;
 
     public SaveData(Activity main) {
         sharedPreferences = main.getSharedPreferences("save_data", Context.MODE_PRIVATE);
@@ -31,9 +32,10 @@ public class SaveData {
             exp = sharedPreferences.getInt("exp",0);
             searchprog = sharedPreferences.getInt("sp",50);
             gold = sharedPreferences.getInt("gold",100);
-            boxes = sharedPreferences.getInt("boxes",1);
+            boxes = sharedPreferences.getInt("boxes",100);
             lumps = sharedPreferences.getStringSet("lumps", null);
             upgrades = sharedPreferences.getString("upgrades","00000000");
+            activelumps = sharedPreferences.getStringSet("activelumps", null);
             _test_tostring();
         }
         else{
@@ -51,6 +53,7 @@ public class SaveData {
         editor.putInt("boxes", boxes);
         editor.putStringSet("lumps", lumps);
         editor.putString("upgrades", upgrades);
+        editor.putStringSet("activelumps", activelumps);
 
         editor.commit();
         _test_tostring();
@@ -95,6 +98,28 @@ public class SaveData {
         for(int i = 0; i < lumpSet.length; i++) {
             lump = new Lump(lumpSet[i]);
             lumpList.add(lump);
+        }
+    }
+
+    public void loadActiveLumpsFromArrayList(ArrayList<Lump> all, ArrayList<Lump> active) {
+        if (activelumps == null) activelumps = new HashSet<>();
+        if (all == null || active == null) return;
+        int lumpCount = active.size();
+        if (lumpCount == 0) return;
+        activelumps.clear();
+        for(int i = 0; i < lumpCount; i++) {
+            activelumps.add(String.valueOf(all.indexOf(active.get(i))));
+        }
+    }
+
+    public void translateActiveLumpsStringSet(ArrayList<Lump> all, ArrayList<Lump> active) {
+        if (all == null || active == null || activelumps == null) return;
+        String[] lumpSet = activelumps.toArray(new String[activelumps.size()]);
+        active.clear();
+        int index;
+        for(int i = 0; i < lumpSet.length; i++) {
+            index = Integer.parseInt(lumpSet[i]);
+            active.add(all.get(index));
         }
     }
 

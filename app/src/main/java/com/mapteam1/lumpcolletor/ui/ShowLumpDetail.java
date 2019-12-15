@@ -21,10 +21,13 @@ public class ShowLumpDetail extends Activity {
         final int index = getIntent().getIntExtra("index", -1);
         ImageView charview = findViewById(R.id.char_view);
         TextView charinfo = findViewById(R.id.char_info);
+        final Lump charLump;
         if (index >= 0) {
-            Lump charLump = Player.getPlayer().getLumpList().get(index);
+            charLump = Player.getPlayer().getLumpList().get(index);
             charview.setImageBitmap(charLump.getBitmap());
             charinfo.setText(charLump.GetSkillDescription());
+        } else {
+            charLump = null;
         }
         Button button_close = findViewById(R.id.button_close); //설정버튼
         button_close.setOnClickListener(new View.OnClickListener(){
@@ -44,6 +47,30 @@ public class ShowLumpDetail extends Activity {
                 } else {
                     Player.getPlayer().getLumpList().remove(index);
                     mOnClose(v);
+                }
+            }
+        });
+
+        final Button button_toggle_active = findViewById(R.id.button_toggle_active);
+        final Player player = Player.getPlayer();
+        final String activate = "스킬 활성화 (%d/%d)";
+        final String deactivate = "스킬 비활성화 (%d/%d)";
+        final String fullyactivated = "더이상 활성화할 수 없음 (%d/%d)";
+        if (player.isLumpActive(charLump)) {
+            button_toggle_active.setText(String.format(deactivate, player.getActiveLumpCount(), player.getMaxActiveLump()));
+        } else {
+            button_toggle_active.setText(String.format(activate, player.getActiveLumpCount(), player.getMaxActiveLump()));
+        }
+        button_toggle_active.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                if (player.isLumpActive(charLump)) {
+                    if (player.setLumpInactive(charLump))
+                        button_toggle_active.setText(String.format(activate, player.getActiveLumpCount(), player.getMaxActiveLump()));
+                } else {
+                    if (player.setLumpActive(charLump))
+                        button_toggle_active.setText(String.format(deactivate, player.getActiveLumpCount(), player.getMaxActiveLump()));
+                    else
+                        button_toggle_active.setText(String.format(fullyactivated, player.getActiveLumpCount(), player.getMaxActiveLump()));
                 }
             }
         });

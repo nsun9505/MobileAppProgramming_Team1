@@ -89,7 +89,12 @@ class MyAdapter extends BaseAdapter {
         if (convertView==null)
             convertView = inf.inflate(layout, null);
         ImageView iv1 = (ImageView)convertView.findViewById(R.id.characterimageView);
-        iv1.setImageBitmap(img.get(position).getBitmap());
+        Lump lump = img.get(position);
+        iv1.setImageBitmap(lump.getBitmap());
+        if (Player.getPlayer().isLumpActive(lump))
+            iv1.setBackgroundColor(Color.YELLOW);
+        else
+            iv1.setBackgroundColor(Color.TRANSPARENT);
 
         return convertView;
     }

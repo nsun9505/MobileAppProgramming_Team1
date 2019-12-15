@@ -69,7 +69,7 @@ public class LootBoxFragment extends Fragment {
 
         // 상자깡을 누르면 상자 오픈
         final Button boxBtn = (Button)root.findViewById(R.id.btn_lootbox);
-        boxBtn.setText("소유 박스 수 : "+Player.getPlayer().getNumOfBox());
+        boxBtn.setText("상자 열기(보유 갯수 : "+Player.getPlayer().getNumOfBox()+")");
         boxBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

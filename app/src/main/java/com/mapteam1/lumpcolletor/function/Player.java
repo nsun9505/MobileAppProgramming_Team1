@@ -11,7 +11,7 @@ public class Player {
     private static final int NOTMAXSEARCHVALUE = 0;
     private static final int COMPLETEPIVOT = 1;
     private static final int NOTCOMPLETEPIVOT = 0;
-    private static final int MULTIPLY_TYPE_SKILL_PROBABILITY = 0;
+    private static final int MULTIPLY_TYPE_SKILL_CHANCE = 0;
     private static final int MULTIPLY_TYPE_SKILL_EFFECT = 1;
     private static final int MULTIPLY_TYPE_SEARCHVALUE = 2;
     private static final int MULTIPLY_TYPE_MONEY = 3;
@@ -37,6 +37,8 @@ public class Player {
     // 가지고 있는 장식리스트
     private ArrayList<Decoration> decoList;
     private ArrayList<Lump> lumpList;
+    private ArrayList<Lump> activeLumpList;
+    private int maxActiveLump = 3;
 
     // 싱글톤
     private static Player myPlayer;
@@ -58,9 +60,8 @@ public class Player {
         upgradeList.add(3, new Upgrade("골드 획득량 증가"));
         upgradeList.add(4, new Upgrade("경험치 획득량 증가"));
         upgradeList.add(5, new Upgrade("최대 탐색도 증가"));
-        upgradeList.add(6, new Upgrade("10초당 경험치 획득"));
-        upgradeList.add(7, new Upgrade("10초당 탐색도 획득"));
         this.lumpList = new ArrayList<>();
+        this.activeLumpList = new ArrayList<>();
     }
 
     private static class MyPlayer{
@@ -82,7 +83,7 @@ public class Player {
         // 경험치를 갱신하고, 레벨을 증가시키기 위한 값 리턴
         // 다음 레벨에 맞는 최대 경험치 갱신
         if (currentExp >= this.getMaxExp()) {
-            this.setExp(this.getCurrentExp() - this.getMaxExp());
+            this.setExp(currentExp - this.getMaxExp());
             this.UpdateMaxExp();
             this.increaseNumberOfBox();
             this.levelUp();
@@ -196,11 +197,11 @@ public class Player {
 
     public int getAdditionValueByMultiply(int type, int origin){
         Upgrade item = this.getUpgradeList().get(type);
-        return item.applyEffect(origin);
+        return item.applyEffect(origin) + getSkillEffects(type, origin);
     }
 
     public int openBoxGetMoney(){
-        int ret = OPEN_BOX_BASE_VALUE + getAdditionValueByMultiply(MULTIPLY_TYPE_MONEY, OPEN_BOX_BASE_VALUE);;
+        int ret = OPEN_BOX_BASE_VALUE + getAdditionValueByMultiply(MULTIPLY_TYPE_MONEY, OPEN_BOX_BASE_VALUE);
         this.setMoney(this.getMoney() + ret);
         return ret;
     }
@@ -279,6 +280,47 @@ public class Player {
         return lumpList;
     }
 
+    public int getSkillEffects(int type, int origin) {
+        if (type == MULTIPLY_TYPE_SEARCHVALUE || type == MULTIPLY_TYPE_MONEY || type == MULTIPLY_TYPE_EXP) {
+            int i, bonus = 0;
+            double bonusChance = upgradeList.get(MULTIPLY_TYPE_SKILL_CHANCE).applyEffect();
+            double bonusEffect = upgradeList.get(MULTIPLY_TYPE_SKILL_EFFECT).applyEffect();
+
+            for(i = 0; i < getActiveLumpCount(); i++) {
+                bonus += activeLumpList.get(i).getSkillEffect(type, origin, bonusChance, bonusEffect);
+            }
+            return bonus;
+        } else
+            return 0;
+    }
+
+    public boolean isLumpActive(Lump lump) {
+        return (activeLumpList.contains(lump));
+    }
+
+    public boolean setLumpActive(Lump lump) {
+        if (!activeLumpList.contains(lump) && activeLumpList.size() < maxActiveLump) {
+            activeLumpList.add(lump);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setLumpInactive(Lump lump) {
+        if (activeLumpList.contains(lump)) {
+            activeLumpList.remove(lump);
+            return true;
+        }
+        return false;
+    }
+
+    public int getActiveLumpCount() {
+        return activeLumpList.size();
+    }
+    public int getMaxActiveLump() {
+        return maxActiveLump;
+    }
+
     public void Load(SaveData saveData) {
         level = saveData.level;
         currentExp = saveData.exp;
@@ -291,6 +333,7 @@ public class Player {
         for(int i = 0; i < upgradePoints.length; i++) {
             upgradeList.get(i).setuPoint(upgradePoints[i]);
         }
+        saveData.translateActiveLumpsStringSet(lumpList, activeLumpList);
 
         UpdateMaxExp();
         UpdateMaxSearchValue();
@@ -311,6 +354,7 @@ public class Player {
             upgradePoints[i] = upgradeList.get(i).getuPoint();
         }
         saveData.loadUpgradesFromList(upgradePoints);
+        saveData.loadActiveLumpsFromArrayList(lumpList, activeLumpList);
         saveData.Save();
     }
 }

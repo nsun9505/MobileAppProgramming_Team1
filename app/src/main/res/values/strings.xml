@@ -13,14 +13,15 @@
     <string name="name_upgrade_3">골드 획득량 증가</string>
     <string name="name_upgrade_4">경험치 획득량 증가</string>
     <string name="name_upgrade_5">최대 탐색도 증가</string>
-    <string name="name_upgrade_6">10초당 경험치 획득</string>
+    <string name="name_upgrade_6">스킬 활성화 최대 수 증가</string>
     <string name="name_upgrade_7">10초당 탐색도 획득</string>
     <string name="name_upgrade_8">10초당 골드 획득</string>
-    <string name="name_upgrade_9">최대 덩어리 활성화 수 증가</string>
+    <string name="name_upgrade_9">10초당 경험치 획득</string>
     <string name="name_loot_title">획득할 수 있는 것들</string>
     <string name="name_loot_0">탐색도 100</string>
     <string name="name_loot_1">골드 100</string>
     <string name="name_loot_2">경험치 100</string>
+    <string name="s_close">닫기</string>
     <string name="s_showlump">보유한 덩어리</string>
     <string name="s_minigame_reset">센서 위치 초기화</string>
     <string name="option_title">환경설정</string>
