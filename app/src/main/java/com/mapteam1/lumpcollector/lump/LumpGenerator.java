@@ -24,7 +24,6 @@ public class LumpGenerator {
     private static final int RMIRROR = 32;
     private static final int RORIGIN = 64;
 
-    public String _test_error_msg = "no error";
     JSONArray blueprints;
     JSONObject parts_size;
     private Random random = new Random();
@@ -327,7 +326,6 @@ public class LumpGenerator {
         {
             ex.printStackTrace();
         }
-        //_test_error_msg = json;
 
         return json;
     }

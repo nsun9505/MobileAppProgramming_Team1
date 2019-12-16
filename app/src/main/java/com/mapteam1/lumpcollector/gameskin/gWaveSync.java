@@ -7,9 +7,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 public class gWaveSync  extends GameParent{
-    float loop = 0;
-    long now = 0;
-    long last = 0;
+    private float loop = 0;
+    private long now = 0;
 
     public gWaveSync() {
         super();
@@ -52,7 +51,7 @@ public class gWaveSync  extends GameParent{
         updatePath(path, xpos, ypos);
         canvas.drawPath(path, paint);
 
-        last = now;
+        long last = now;
         now = System.currentTimeMillis();
         int dt = Math.max(1, (int)(now - last)/10);
         loop = (loop+dt*0.02f)%(float)(Math.PI*2);

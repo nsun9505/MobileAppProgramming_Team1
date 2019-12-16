@@ -29,7 +29,7 @@ public class SaveData {
             exp = sharedPreferences.getInt("exp",0);
             searchprog = sharedPreferences.getInt("sp",50);
             gold = sharedPreferences.getInt("gold",100);
-            boxes = sharedPreferences.getInt("boxes",100);
+            boxes = sharedPreferences.getInt("boxes",2);
             lumps = sharedPreferences.getStringSet("lumps", null);
             upgrades = sharedPreferences.getString("upgrades","00000000");
             activelumps = sharedPreferences.getStringSet("activelumps", null);
@@ -114,9 +114,47 @@ public class SaveData {
         String[] lumpSet = activelumps.toArray(new String[activelumps.size()]);
         active.clear();
         int index;
+        Lump lump;
         for(int i = 0; i < lumpSet.length; i++) {
             index = Integer.parseInt(lumpSet[i]);
-            active.add(all.get(index));
+            lump = all.get(index);
+            if (lump != null) active.add(lump);
+        }
+    }
+
+
+    public void translateLumpsStringSet(ArrayList<Lump> lumpList, ArrayList<Lump> activeLumpList) {
+        if (lumpList == null || activeLumpList == null) return;
+        if (lumps == null || activelumps == null) return;
+        String[] lumpSet = lumps.toArray(new String[lumps.size()]);
+        Lump lump;
+        lumpList.clear();
+        activeLumpList.clear();
+        for(int i = 0; i < lumpSet.length; i++) {
+            lump = new Lump(lumpSet[i]);
+            lumpList.add(lump);
+            if (activelumps.contains(lumpSet[i])) {
+                activeLumpList.add(lump);
+            }
+        }
+    }
+
+    public void loadLumpsFromArrayList(ArrayList<Lump> lumpList, ArrayList<Lump> activeLumpList) {
+        if (lumps == null) lumps = new HashSet<>();
+        if (activelumps == null) activelumps = new HashSet<>();
+        if (lumpList == null) return;
+        int lumpCount = lumpList.size();
+        if (lumpCount == 0) return;
+        lumps.clear();
+        Lump lump;
+        String data;
+        for(int i = 0; i < lumpCount; i++) {
+            lump = lumpList.get(i);
+            data = lump.Encode();
+            lumps.add(data);
+            if (activeLumpList.contains(lump)) {
+                activelumps.add(data);
+            }
         }
     }
 

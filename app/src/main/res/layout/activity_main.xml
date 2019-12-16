@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -111,17 +110,17 @@
             android:textSize="15dp" />
     </LinearLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/settingbtn"
         android:layout_width="50dp"
         android:layout_height="0dp"
-        android:foreground="@drawable/ic_option"
-        android:foregroundTint="#000000"
-        android:scaleType="centerInside"
+        android:scaleType="centerCrop"
+        android:tint="#000000"
         app:layout_constraintBottom_toBottomOf="@id/textView3"
         app:layout_constraintLeft_toRightOf="@+id/exp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textView3" />
+        app:layout_constraintTop_toTopOf="@id/textView3"
+        app:srcCompat="@drawable/ic_option" />
 
     <LinearLayout
         android:id="@+id/resource_bar"
@@ -139,8 +138,10 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:foreground="@drawable/ic_coin"
-            android:foregroundTint="#000000" />
+            android:background="#00000000"
+            android:scaleType="centerInside"
+            android:tint="#000000"
+            app:srcCompat="@drawable/ic_coin" />
 
         <TextView
             android:id="@+id/textView4"
@@ -153,8 +154,8 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:foreground="@drawable/ic_box"
-            android:foregroundTint="#000000" />
+            android:tint="#000000"
+            app:srcCompat="@drawable/ic_box" />
 
         <TextView
             android:id="@+id/textView5"

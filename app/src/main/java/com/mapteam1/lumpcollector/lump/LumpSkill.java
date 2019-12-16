@@ -16,8 +16,8 @@ public class LumpSkill {
     }
 
     public int activateAddition(int matchType, int value, double bonusChance, double bonueEffect) {
-        double finalChance = chance * (1+bonusChance/100);
-        double finalEffect = effect * (1+bonueEffect/100);
+        double finalChance = chance * (1+bonusChance);
+        double finalEffect = effect * (1+bonueEffect);
         if (matchType == type && new Random().nextInt(100) <= finalChance)
             return (int)(value * finalEffect / 100);
         return 0;

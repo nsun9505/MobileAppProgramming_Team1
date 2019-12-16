@@ -1,5 +1,6 @@
 package com.mapteam1.lumpcollector.ui.upgrade;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -36,16 +38,17 @@ public class UpgradeFragment extends Fragment {
                 R.drawable.ic_upgrade_ ,
                 R.drawable.ic_upgrade_ };
 
+        Context context = inflater.getContext();
         Upgrade upgrade;
         ListView_Upgrade upgradeStructure;
         for(int i = 0; i < upgradeItems.size(); i++) {
             upgrade = upgradeItems.get(i);
-            upgradeStructure = new ListView_Upgrade(getResources().getDrawable(img[i], null), upgrade.getuName(), upgrade.getuChanges(), String.valueOf(upgrade.getuCost()), i);
+            upgradeStructure = new ListView_Upgrade(ContextCompat.getDrawable(context, img[i]), upgrade.getuName(), upgrade.getuChanges(), String.valueOf(upgrade.getuCost()), i);
             upgradeList.add(upgradeStructure);
         }
 
         View root1 = inflater.inflate(R.layout.fragment_upgrade, container, false);
-        ListView_Adapter adapter = new ListView_Adapter(getActivity().getApplicationContext(), upgradeList, this);
+        ListView_Adapter adapter = new ListView_Adapter(context, upgradeList, this);
 
         ListView lv = (ListView)root1.findViewById(R.id.upgrade_list);
         lv.setAdapter(adapter);

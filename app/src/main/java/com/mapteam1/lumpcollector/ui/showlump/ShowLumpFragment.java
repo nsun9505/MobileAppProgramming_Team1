@@ -28,11 +28,11 @@ public class ShowLumpFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        showcharacterViewModel =ViewModelProviders.of(this).get(ShowLumpViewModel.class);
+        showcharacterViewModel = ViewModelProviders.of(this).get(ShowLumpViewModel.class);
         View root1 = inflater.inflate(R.layout.fragment_showlump, container, false);
 
         MyAdapter adapter = new MyAdapter(
-                getActivity().getApplicationContext(),
+                inflater.getContext(),
                 R.layout.adapter_lump       // GridView 항목의 레이아웃 row.xml
                 );    // 데이터
         GridView gv1 = (GridView)root1.findViewById(R.id.gv_showlump);

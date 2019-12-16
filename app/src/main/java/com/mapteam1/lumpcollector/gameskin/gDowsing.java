@@ -8,9 +8,8 @@ import android.graphics.Paint;
 import com.google.android.material.math.MathUtils;
 
 public class gDowsing extends GameParent {
-    int loop = 0;
-    long now = 0;
-    long last = 0;
+    private int loop = 0;
+    private long now = 0;
 
     @Override
     public void Update(float xpos, float ypos, float xtarget, float ytarget) {
@@ -44,7 +43,7 @@ public class gDowsing extends GameParent {
         }
 
 
-        last = now;
+        long last = now;
         now = System.currentTimeMillis();
         int dt = Math.max(1, (int)(now - last)/10);
         loop = (loop+dt)%200;

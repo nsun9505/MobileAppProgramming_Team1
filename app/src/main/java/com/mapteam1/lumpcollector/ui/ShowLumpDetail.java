@@ -41,8 +41,11 @@ public class ShowLumpDetail extends Activity {
             int repeat = 3;
 
             public void onClick(View v) {
-                if (repeat > 0) {
-                    button_release.setText(repeat+"회 더 눌러서 놓아주기");
+                if (Player.getPlayer().isLumpActive(charLump)) {
+                    button_release.setText("비활성화해서 놓아주기");
+                    repeat = 3;
+                } else if (repeat > 0) {
+                    button_release.setText(repeat + "회 더 눌러서 놓아주기");
                     repeat--;
                 } else {
                     Player.getPlayer().getLumpList().remove(index);

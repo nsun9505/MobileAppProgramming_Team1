@@ -25,13 +25,13 @@ public class LootLumpFragment extends Fragment {
     private static final int LOOT_LUMP_COST = 100;
 
     private LootLumpViewModel lootLumpViewModel;
-    private Context context;
+
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
         lootLumpViewModel =
                 ViewModelProviders.of(this).get(LootLumpViewModel.class);
         View root = inflater.inflate(R.layout.fragment_lootlump, container, false);
-        final TextView textView = root.findViewById(R.id.text_opencharacter);
+        final TextView textView = root.findViewById(R.id.LootLumpText);
         lootLumpViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -49,21 +49,15 @@ public class LootLumpFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 boolean ret = Player.getPlayer().getParts(LOOT_LUMP_COST);
-                if(ret == false){
-                    Toast.makeText(container.getContext(), "탐색도가 부족합니다.", Toast.LENGTH_LONG).show();
-                }else {
+                if (ret) {
                     lootLumpViewModel.createLump();
                     button.setText(String.format(LOOT_LUMP_TEXT, LOOT_LUMP_COST, Player.getPlayer().getSearchValue()));
+                } else {
+                    Toast.makeText(container.getContext(), "탐색도가 부족합니다.", Toast.LENGTH_LONG).show();
                 }
             }
         });
         button.setText(String.format(LOOT_LUMP_TEXT, LOOT_LUMP_COST, Player.getPlayer().getSearchValue()));
-        /*lootLumpViewModel.getBlueprint().observe(this, new Observer<LumpBlueprint>() {
-            @Override
-            public void onChanged(@Nullable LumpBlueprint s) {
-                imageview.setImageBitmap(s.Produce());
-            }
-        });*/
 
         return root;
     }

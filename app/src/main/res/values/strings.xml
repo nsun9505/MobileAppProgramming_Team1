@@ -22,6 +22,7 @@
     <string name="name_loot_1">골드 100</string>
     <string name="name_loot_2">경험치 100</string>
     <string name="s_close">닫기</string>
+    <string name="s_release_lump">놓아주기</string>
     <string name="s_showlump">보유한 덩어리</string>
     <string name="s_minigame_reset">센서 위치 초기화</string>
     <string name="option_title">환경설정</string>

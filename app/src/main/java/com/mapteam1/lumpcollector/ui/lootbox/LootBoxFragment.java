@@ -50,7 +50,7 @@ public class LootBoxFragment extends Fragment {
                 R.string.name_loot_2};
 
         MyAdapter adapter = new MyAdapter (
-                getActivity().getApplicationContext(),
+                inflater.getContext(),
                 R.layout.adapter_item,       // GridView 항목의 레이아웃 row.xml
                 img);    // 데이터
 
@@ -69,7 +69,7 @@ public class LootBoxFragment extends Fragment {
 
         // 상자깡을 누르면 상자 오픈
         final Button boxBtn = (Button)root.findViewById(R.id.btn_lootbox);
-        boxBtn.setText("상자 열기(보유 갯수 : "+Player.getPlayer().getNumOfBox()+")");
+        boxBtn.setText(getBtnText());
         boxBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,12 +92,16 @@ public class LootBoxFragment extends Fragment {
                         Toast.makeText(tempContainer.getContext(), "열 수 있는 박스가 없습니다.", Toast.LENGTH_SHORT).show();
                         break;
                 }
-                boxBtn.setText("소유 박스 수 : "+Player.getPlayer().getNumOfBox());
+                boxBtn.setText(getBtnText());
             }
         });
         return root;
     }
 
+    private String getBtnText() {
+        String text = "상자 열기(보유 갯수 : %d)";
+        return String.format(text, Player.getPlayer().getNumOfBox());
+    }
 }
 class MyAdapter extends BaseAdapter {
     Context context;

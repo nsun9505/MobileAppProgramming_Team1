@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#eeeeee"
     android:layout_width="match_parent"
@@ -34,7 +33,7 @@
             android:id="@+id/button_release"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="놓아주기(버리기)"/>
+            android:text="@string/s_release_lump"/>
     </LinearLayout>
 
     <Button

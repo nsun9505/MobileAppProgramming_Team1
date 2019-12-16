@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.Button;
 
 import com.mapteam1.lumpcollector.function.Player;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,10 +19,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private static Handler handler;
     private Thread updateThread;
     private View decorView;
     private int uiOption;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         //전체화면 중간 스톱
         setContentView(R.layout.activity_main);
 
-        Button settingbtn = (Button) findViewById(R.id.settingbtn); //설정버튼
+        ImageButton settingbtn = findViewById(R.id.settingbtn); //설정버튼
         settingbtn.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) { //클릭이벤트
@@ -110,33 +111,32 @@ public class MainActivity extends AppCompatActivity {
         final TextView boxText = (TextView)findViewById(R.id.textView5);
         boxText.setText(String.valueOf(player.getNumOfBox()));
 
-        Handler handler = new Handler(){
-          @Override
-          public void handleMessage(Message msg){
-            switch(msg.what){
-                case WorkThread.UPDATE_LEVEL:
-                    levelText.setText(msg.obj.toString());
-                    break;
-                case WorkThread.UPDATE_MONEY:
-                    moneyText.setText(msg.obj.toString());
-                    break;
-                case WorkThread.UPDATE_EXP:
-                    expProgress.setProgress(msg.arg1);
-                    expText.setText(msg.obj.toString());
-                    break;
-                case WorkThread.UPDATE_SEARCHVALUE:
-                    searchProgress.setProgress(msg.arg1);
-                    searchText.setText(msg.obj.toString());
-                    break;
-                case WorkThread.UPDATE_MAX_SEARCH_VALUE:
-                    searchProgress.setProgress(Player.getPlayer().getSearchValue());
-                    searchText.setText(msg.obj.toString());
-                    break;
-                case WorkThread.UPDATE_NUM_OF_BOX:
-                    boxText.setText(msg.obj.toString());
-            }
-          }
-        };
+        if (handler == null) {
+            handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    switch (msg.what) {
+                        case WorkThread.UPDATE_LEVEL:
+                            levelText.setText(msg.obj.toString());
+                            break;
+                        case WorkThread.UPDATE_MONEY:
+                            moneyText.setText(msg.obj.toString());
+                            break;
+                        case WorkThread.UPDATE_EXP:
+                            expProgress.setProgress(msg.arg1);
+                            expText.setText(msg.obj.toString());
+                            break;
+                        case WorkThread.UPDATE_SEARCHVALUE:
+                        case WorkThread.UPDATE_MAX_SEARCH_VALUE:
+                            searchProgress.setProgress(msg.arg1);
+                            searchText.setText(msg.obj.toString());
+                            break;
+                        case WorkThread.UPDATE_NUM_OF_BOX:
+                            boxText.setText(msg.obj.toString());
+                    }
+                }
+            };
+        }
 
         updateThread = new WorkThread(handler);
         updateThread.start();

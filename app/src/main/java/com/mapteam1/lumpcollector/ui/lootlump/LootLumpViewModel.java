@@ -17,7 +17,6 @@ public class LootLumpViewModel extends ViewModel {
 
     public LootLumpViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue(LumpGenerator.getref()._test_error_msg);
         mBitmap = new MutableLiveData<>();
     }
 
@@ -30,5 +29,6 @@ public class LootLumpViewModel extends ViewModel {
         Lump lump = new Lump(LumpGenerator.getref().MakeBlueprint());
         Player.getPlayer().getLumpList().add(lump);
         mBitmap.setValue(lump.getBitmap());
+        mText.setValue(lump.GetSkillDescription());
     }
 }

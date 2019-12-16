@@ -51,7 +51,7 @@ public class Player {
         this.money = 0;
         this.numOfBox = 0;
         this.maxExp = 100;
-        this.maxSearchValue = 100;
+        this.maxSearchValue = 200;
         this.decoList = new ArrayList<Decoration>();
         this.upgradeList = new ArrayList<Upgrade>();
         upgradeList.add(0, new Upgrade("스킬 발동 확률 증가"));
@@ -99,7 +99,7 @@ public class Player {
     }
 
     public void UpdateMaxSearchValue() {
-        maxSearchValue = (int) (100 * (upgradeList.get(MULTIPLY_TYPE_MAX_SEARCH_VALUE).applyEffect() + 1));
+        maxSearchValue = (int) (200 * (upgradeList.get(MULTIPLY_TYPE_MAX_SEARCH_VALUE).applyEffect() + 1));
     }
 
     // 1차 보상 : 탐색도 증가
@@ -328,12 +328,11 @@ public class Player {
         money = saveData.gold;
         numOfBox = saveData.boxes;
 
-        saveData.translateLumpsStringSet(lumpList);
+        saveData.translateLumpsStringSet(lumpList, activeLumpList);
         int[] upgradePoints = saveData.translateUpgradesString();
         for(int i = 0; i < upgradePoints.length; i++) {
             upgradeList.get(i).setuPoint(upgradePoints[i]);
         }
-        saveData.translateActiveLumpsStringSet(lumpList, activeLumpList);
 
         UpdateMaxExp();
         UpdateMaxSearchValue();
@@ -347,14 +346,13 @@ public class Player {
         saveData.searchprog = searchValue;
         saveData.gold = money;
         saveData.boxes = numOfBox;
-        saveData.loadLumpsFromArrayList(lumpList);
+        saveData.loadLumpsFromArrayList(lumpList, activeLumpList);
         int upgradeNumber = upgradeList.size();
         int[] upgradePoints = new int[upgradeNumber];
         for(int i = 0; i < upgradeNumber; i++) {
             upgradePoints[i] = upgradeList.get(i).getuPoint();
         }
         saveData.loadUpgradesFromList(upgradePoints);
-        saveData.loadActiveLumpsFromArrayList(lumpList, activeLumpList);
         saveData.Save();
     }
 }
