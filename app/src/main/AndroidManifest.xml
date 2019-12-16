@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mapteam1.lumpcolletor">
+    package="com.mapteam1.lumpcollector">
 
     <application
         android:allowBackup="true"
@@ -20,11 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingActivity"
-            android:theme="@style/AppTheme.Dialog"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.Dialog"/>
         <activity android:name=".ui.ShowLumpDetail"
-            android:theme="@style/AppTheme.Dialog"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.Dialog"/>
     </application>
 
 </manifest>

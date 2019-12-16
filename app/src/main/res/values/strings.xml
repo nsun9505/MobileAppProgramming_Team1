@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lump Colletor</string>
+    <string name="app_name">덩어리 수집기</string>
     <string name="title_minigame">탐색</string>
     <string name="title_lootbox">상자</string>
     <string name="title_lootlump">뽑기</string>

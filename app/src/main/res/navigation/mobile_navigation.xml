@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/navigation_gamestart"
-        android:name="com.mapteam1.lumpcolletor.ui.minigame.MinigameFragment"
+        android:name="com.mapteam1.lumpcollector.ui.minigame.MinigameFragment"
         android:label="@string/title_minigame"
         tools:layout="@layout/fragment_minigame" />
 
     <fragment
         android:id="@+id/navigation_open_itembox"
-        android:name="com.mapteam1.lumpcolletor.ui.lootbox.LootBoxFragment"
+        android:name="com.mapteam1.lumpcollector.ui.lootbox.LootBoxFragment"
         android:label="@string/title_lootbox"
         tools:layout="@layout/fragment_lootbox" />
 
     <fragment
         android:id="@+id/navigation_open_charbox"
-        android:name="com.mapteam1.lumpcolletor.ui.lootlump.LootLumpFragment"
+        android:name="com.mapteam1.lumpcollector.ui.lootlump.LootLumpFragment"
         android:label="@string/title_lootlump"
         tools:layout="@layout/fragment_lootlump" />
 
     <fragment
         android:id="@+id/navigation_view_character"
-        android:name="com.mapteam1.lumpcolletor.ui.showlump.ShowLumpFragment"
+        android:name="com.mapteam1.lumpcollector.ui.showlump.ShowLumpFragment"
         android:label="@string/title_showlump"
         tools:layout="@layout/fragment_showlump" />
 
     <fragment
         android:id="@+id/navigation_upgrade"
-        android:name="com.mapteam1.lumpcolletor.ui.upgrade.UpgradeFragment"
+        android:name="com.mapteam1.lumpcollector.ui.upgrade.UpgradeFragment"
         android:label="@string/title_upgrade"
         tools:layout="@layout/fragment_upgrade" />
 
