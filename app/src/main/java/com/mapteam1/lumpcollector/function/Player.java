@@ -138,7 +138,7 @@ public class Player {
     // 2차 보상
     // 레벨업 : box 수 증가
     public void increaseNumberOfBox() {
-        this.setNumOfBox(this.getNumOfBox() + 1);
+        this.setNumOfBox(this.getNumOfBox() + (int)Math.floor(Math.sqrt(Math.max(1, this.getCurrentLevel()))));
     }
 
     // 수정 필요
