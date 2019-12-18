@@ -146,6 +146,7 @@ public class SaveData {
         int lumpCount = lumpList.size();
         if (lumpCount == 0) return;
         lumps.clear();
+        activelumps.clear();
         Lump lump;
         String data;
         for(int i = 0; i < lumpCount; i++) {
